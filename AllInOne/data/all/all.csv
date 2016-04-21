@@ -1,0 +1,3 @@
+date,number,code,login,version,payway,chargePeriod_text,chargeYear,plan,unit,getamount,payamount,customizedPrem,flexible,paytype,annualmoney,fundcode0,ratio0,fundcode1,ratio1,fundcode2,ratio2,addcode,addpaytype,addperiod,addyear,addamount
+105/04/21,00000559000,VNL,STDB0001,1,12,1,20,1,1,100000,100000,100000,10000,12,30000,83100,30,CAMAR,30,ACMIT,40,XDR,1,1,10,10000
+105/04/20,00000557040,QIA,STDB0001,1,12,1,20,1,1,100000,100000,100000,10000,12,30000,SVSA,30,CAMAR,30,ACMIT,40,XDR,1,1,10,10000
