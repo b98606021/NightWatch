@@ -6,7 +6,7 @@ var converter = new Converter({
   checkType: false
 });
 //read from file 
-fs.createReadStream("data/trad/trad.csv",[{flags: 'rs+'}]).pipe(converter);
+fs.createReadStream("data/trad/trad_smoke.csv",[{flags: 'rs+'}]).pipe(converter);
 var moment = require('moment');
 var now = moment().format("YYYY_MMM_Do_h.mm.ss a");
 var writeStream = fs.createWriteStream("data/trad/"+ now +".csv", [{flags: 'rs+'}]);
@@ -33,7 +33,7 @@ module.exports = {
     	  .setValue('input[name=submissionDate_minguo]', jsonArray[i]['date'])
     	  .useXpath()
     	  .setValue("//input[@name='brbdAcceptanceVO.policyCode_text']",jsonArray[i]['number'])
-        .getAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
         writeStream.write('\r\n'+result.value+',')
         })
         var id1 = makeid()
@@ -112,20 +112,22 @@ module.exports = {
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
   	  	.setValue("//input[@name='coverage.initialType_text']", '12')
-        .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
          if (result.value == '00'){
-          browser
+          this
             .click("//input[@name='coverage.amount']")
             .pause(1000)
             .setValue("//input[@name='coverage.amount']", jsonArray[i-1]['getamount'])
+            console.log('amount'+i)
          } else {
           browser
             .setValue("//input[@name='coverage.chargePeriod_text']", '1')
-            .setValue("//input[@name='coverage.chargeYear']", '10')
+            .setValue("//input[@name='coverage.chargeYear']", '20')
             .click("//input[@name='coverage.amount']")
             .pause(1000)
             .setValue("//input[@name='coverage.amount']", jsonArray[i-1]['getamount'])
             .setValue("//input[@name='payNext_text']", '3')
+            console.log('amount'+i)
           }
         })
   	  	//.setValue("//input[@name='coverage.chargePeriod_text']", '1')
@@ -173,7 +175,9 @@ module.exports = {
         .clearValue("//input[@name='bene.certiCode']") 
         var id2 = makeid()
         browser
-        .setValue("//input[@name='bene.certiCode']", id2) 
+        .setValue("//input[@name='bene.certiCode']", id1) 
+        .setValue("//input[@name='bene.shareOrder']", '1') 
+        .setValue("//input[@name='bene.shareRate']", '100') 
     		.click("(//input[@name='__btnSave'])[position()=4]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
@@ -200,6 +204,20 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
+
+        // trad claim
+        .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+        .setValue("//input[@name='review.reviewIndi_text']", '1')
+        .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+        .setValue("//input[@name='review.strVersion']", '1')
+        .click("(//input[@name='__btnSave'])[position()=6]")
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .pause(1000)
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+
+        // final click
     		.click("//input[@name='btnSubmit']", function(){browser.accept_alert()})
     		.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
@@ -282,7 +300,7 @@ module.exports = {
           writeStream.write(money+',')
         }
   	  	})
-  	  	.setValue("//input[@name='payMode_text']", 'LB')
+  	  	.setValue("//input[@name='payMode_text']", '11')
   	  	.click("//input[@name='voucherDate_minguo']")
   	  	.pause(2000)
   	  	.setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])

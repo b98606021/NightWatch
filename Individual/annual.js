@@ -280,7 +280,7 @@ module.exports = {
           writeStream.write(money+',')
         }
         })
-  	  	.setValue("//input[@name='payMode_text']", 'LB')
+  	  	.setValue("//input[@name='payMode_text']", '11')
   	  	.click("//input[@name='voucherDate_minguo']")
   	  	.pause(2000)
   	  	.setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])

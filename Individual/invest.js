@@ -117,6 +117,7 @@ module.exports = {
          if (result.value == '00'){} else {
           browser
             .setValue("//input[@name='payNext_text']", '3')
+            console.log('paynext'+i)
           }
         })
   	  	.setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
@@ -124,9 +125,11 @@ module.exports = {
          if (result.value =='textfiled textfield_null right readOnly ro'){
           browser
             .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i-1]['payamount'])
+            console.log('payamount'+i)
           } else {
           browser
             .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i-1]['payamount'])
+            console.log('payamount'+i)
           }
         })
   	  	.setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
@@ -141,6 +144,7 @@ module.exports = {
          if (result.value =='textfiled textfield_null readOnly ro'){} else {
           browser
             .setValue("//input[@name='coverage.payType_text']", jsonArray[i-1]['paytype'])
+            console.log('paytype'+i)
           }
         })
         .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
@@ -336,7 +340,7 @@ module.exports = {
           writeStream.write(money+',')
         }
         })
-  	  	.setValue("//input[@name='payMode_text']", 'LB')
+  	  	.setValue("//input[@name='payMode_text']", '11')
   	  	.click("//input[@name='voucherDate_minguo']")
   	  	.pause(2000)
   	  	.setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])
