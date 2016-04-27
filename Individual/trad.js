@@ -6,7 +6,7 @@ var converter = new Converter({
   checkType: false
 });
 //read from file 
-fs.createReadStream("data/trad/trad_smoke.csv",[{flags: 'rs+'}]).pipe(converter);
+fs.createReadStream("data/trad/trad.csv",[{flags: 'rs+'}]).pipe(converter);
 var moment = require('moment');
 var now = moment().format("YYYY_MMM_Do_h.mm.ss a");
 var writeStream = fs.createWriteStream("data/trad/"+ now +".csv", [{flags: 'rs+'}]);
@@ -19,7 +19,7 @@ module.exports = {
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
-        .setValue('input[name=userName]', 'IBM6')
+        .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
@@ -58,7 +58,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-        .waitForElementPresent("//tr[@classname='odd']", 10000)
+        .waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -72,7 +72,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(1000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -175,7 +175,7 @@ module.exports = {
         .clearValue("//input[@name='bene.certiCode']") 
         var id2 = makeid()
         browser
-        .setValue("//input[@name='bene.certiCode']", id1) 
+        .setValue("//input[@name='bene.certiCode']", id2) 
         .setValue("//input[@name='bene.shareOrder']", '1') 
         .setValue("//input[@name='bene.shareRate']", '100') 
     		.click("(//input[@name='__btnSave'])[position()=4]")
@@ -227,7 +227,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -241,7 +241,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(5000)
   	  	.click("//td[@classname='table_column odd']")
   	  	.click("//input[@name='claim']")
@@ -259,7 +259,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -273,7 +273,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")

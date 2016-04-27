@@ -13,12 +13,12 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
-        .setValue('input[name=userName]', 'IBM6')
+        .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
@@ -58,7 +58,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(2000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -73,7 +73,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(2000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -210,15 +210,15 @@ module.exports = {
     		.setValue("//input[@name='aplPermit_text']", '2')
 
     		//benificial person
-    		.setValue("//input[@name='bene.nbBeneficiaryType']", '5')
+    		.setValue("//input[@name='bene.nbBeneficiaryType']", '5') // change 5
     		.setValue("//input[@name='bene.designation']", '1')
-        .setValue("//input[@name='bene.name']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
+        .setValue("//input[@name='bene.name']", 'mother'+Math.floor((Math.random() * 1000000) + 1))
         .clearValue("//input[@name='bene.certiCode']") 
         var id2 = makeid()
         browser
         .setValue("//input[@name='bene.certiCode']", id2) 
-        //.click("//input[@name='bene.avgIndi_text']",function(){browser.accept_alert()})
-        //.clearValue("//input[@name='bene.avgIndi_text']")
+        //.setValue("//input[@name='bene.shareOrder']", '1') // delete
+        //.setValue("//input[@name='bene.shareRate']", '100')  // delete
     		.click("(//input[@name='__btnSave'])[position()=4]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
@@ -266,7 +266,7 @@ module.exports = {
       	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -280,7 +280,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -299,7 +299,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -313,7 +313,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
