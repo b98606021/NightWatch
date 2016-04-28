@@ -19,7 +19,7 @@ module.exports = {
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
-        .setValue('input[name=userName]', 'IBM6')
+        .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
@@ -33,18 +33,18 @@ module.exports = {
     	  .setValue('input[name=submissionDate_minguo]', jsonArray[i]['date'])
     	  .useXpath()
     	  .setValue("//input[@name='brbdAcceptanceVO.policyCode_text']", jsonArray[i]['number'])
-        .getAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
         writeStream.write('\r\n'+result.value+',')
         })
         var id1 = makeid()
         browser
         .setValue("//input[@name='brbdAcceptanceVO.phCertiCode']", id1)
         .setValue("//input[@name='brbdAcceptanceVO.insuredCertiCode']", id1)
-        .getAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.productId_text']", jsonArray[i]['code'])
-        .getAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.registerCode']", jsonArray[i]['login'])
@@ -58,7 +58,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(2000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -72,7 +72,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(2000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -112,7 +112,7 @@ module.exports = {
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000) 
   	  	.setValue("//input[@name='coverage.initialType_text']", '01')//jsonArray[i]['payway']) //*** set to ignore
-        .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
          if (result.value == '00'){} else {
           browser
             .setValue("//input[@name='payNext_text']", '3')
@@ -140,13 +140,15 @@ module.exports = {
         .pause(1000)
         //.clearValue("//input[@name='coverage.initialType_text']")
         //.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['addpaytype'])
-        .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-         if (result.value == '00'){} else {
-          browser
-            .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
-            .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
-          }
-        })       
+        !function outer(i) { browser
+          .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+           if (result.value == '00'){} else {
+            browser
+              .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
+              .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
+            }
+        },false)}(i)
+        browser          
         .setValue("//input[@name='coverage.amount']", jsonArray[i]['addamount'])
         //.setValue("//input[@name='coverage.benefitLevel']", '5')
         .click("(//input[@name='__btnSave'])[position()=2]")
@@ -206,7 +208,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -220,7 +222,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -239,7 +241,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='btnReassign']")
@@ -253,7 +255,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
+  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
         .pause(3000)
   	  	.click("//tr[@classname='odd']")
   	  	.click("//input[@name='claim']")
@@ -270,7 +272,7 @@ module.exports = {
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
-        .getAttribute("//input[@name='totalIP']", "value" ,function(result){
+        .elementIdAttribute("//input[@name='totalIP']", "value" ,function(result){
         browser
           .setValue("//input[@name='pay_amount']",result.value)
           .setValue("//input[@name='voucherAmount']",result.value)
