@@ -14,7 +14,7 @@ fs.createReadStream("data/all_split/invest/invest_smoke.csv",[{flags: 'rs+'}]).p
 var moment = require('moment');
 var now = moment().format("YYYY_MMM_Do_h.mm.ss a");
 var writeStream = fs.createWriteStream("data/all_split/"+ now +".csv", [{flags: 'rs+'}]);
-writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
+writeStream.write('Number'+','+'ID'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
   'Open Tradition' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
@@ -23,7 +23,7 @@ module.exports = {
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
-        .setValue('input[name=userName]', 'IBM6')
+        .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
