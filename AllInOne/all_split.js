@@ -93,7 +93,6 @@ module.exports = {
   	  	.click("//input[@name='__btnModify']")
 
   	  	// Insurance Person 
-  	  	.setValue("//input[@name='insured.marriageId_text']", '1')
   	  	.setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
   	  	.setValue("//input[@name='policyHolderBirthDay_minguo']", '700101')
   	  	.setValue("//input[@name='policyHolderGender_text']", '1')
@@ -102,7 +101,7 @@ module.exports = {
   	  	.setValue("//textarea[@name='policyHolderAddrAddress1']", 'tester')
   	  	.click("//input[@name='insured.relationToPH_text']", function(){browser.dismiss_alert()})
   	  	.setValue("//input[@name='insured.relationToPH_text']", '0')
-  	  	.setValue("//input[@name='insured.name']", '')
+        .setValue("//input[@name='insured.marriageId_text']", '1')
   	  	.click("//input[@name='__btnSave']")
   	  	.pause(1000) 
 

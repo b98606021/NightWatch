@@ -89,17 +89,17 @@ module.exports = {
   	  	.click("//input[@name='__btnModify']")
 
   	  	// Insurance Person 
-  	  	.setValue("//input[@name='insured.marriageId_text']", '1')
-  	  	.setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
-  	  	.setValue("//input[@name='policyHolderBirthDay_minguo']", '800101')
-  	  	.setValue("//input[@name='policyHolderGender_text']", '1')
-  	  	.setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
-  	  	.setValue("//input[@name='policyHolderJobClass']", '1')
-  	  	.setValue("//textarea[@name='policyHolderAddrAddress1']", 'tester')
-  	  	.click("//input[@name='policyHolderJobCateId_text']", function(){browser.dismiss_alert()})
-  	  	.setValue("//input[@name='insured.relationToPH_text']", '0')
-  	  	.setValue("//input[@name='insured.name']", '')
-  	  	.click("//input[@name='__btnSave']")
+        .setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
+        .setValue("//input[@name='policyHolderBirthDay_minguo']", '700101')
+        .setValue("//input[@name='policyHolderGender_text']", '1')
+        .setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
+        .setValue("//input[@name='policyHolderJobClass']", '1')
+        .setValue("//textarea[@name='policyHolderAddrAddress1']", 'tester')
+        .click("//input[@name='insured.relationToPH_text']", function(){browser.dismiss_alert()})
+        .setValue("//input[@name='insured.relationToPH_text']", '0')
+        .setValue("//input[@name='insured.marriageId_text']", '1')
+        .click("//input[@name='__btnSave']")
+        .pause(1000) 
 
   	  	// fill the insurance data
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)

@@ -23,7 +23,7 @@ module.exports = {
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
         .waitForElementPresent('div[classname=header_logo_ls]', 10000) 
-        .pause(1000) 
+        .pause(1000) /*
         .url('http://210.13.77.68:10013/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
         .waitForElementPresent('input[name=submissionDate_minguo]', 10000) 
         .pause(1000)
@@ -65,7 +65,7 @@ module.exports = {
   	  	.click("//input[@name='userId']")
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
-
+*/
   	  	//fill new 
         .useXpath()
   	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
@@ -84,28 +84,28 @@ module.exports = {
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000) 
   	  	.setValue("//input[@name='applyVersion']", jsonArray[i]['version']) 
-  	  	.setValue("//input[@name='applyDate_minguo']", jsonArray[i]['date']) 
+  	  	.setValue("//input[@name='applyDate_minguo']", jsonArray[i]['date']) /*
   	  	.click("//input[@name='rowid']")
   	  	.click("//input[@name='__btnModify']")
 
   	  	// Insurance Person 
-  	  	.setValue("//input[@name='insured.marriageId_text']", '1')
-  	  	.setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
-  	  	.setValue("//input[@name='policyHolderBirthDay_minguo']", '800101')
-  	  	.setValue("//input[@name='policyHolderGender_text']", '1')
-  	  	.setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
-  	  	.setValue("//input[@name='policyHolderJobClass']", '1')
-  	  	.setValue("//textarea[@name='policyHolderAddrAddress1']", 'tester')
-  	  	.click("//input[@name='policyHolderJobCateId_text']", function(){browser.dismiss_alert()})
-  	  	.setValue("//input[@name='insured.relationToPH_text']", '0')
-  	  	.setValue("//input[@name='insured.name']", '')
-  	  	.click("//input[@name='__btnSave']")
+        .setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
+        .setValue("//input[@name='policyHolderBirthDay_minguo']", '700101')
+        .setValue("//input[@name='policyHolderGender_text']", '1')
+        .setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
+        .setValue("//input[@name='policyHolderJobClass']", '1')
+        .setValue("//textarea[@name='policyHolderAddrAddress1']", 'tester')
+        .click("//input[@name='insured.relationToPH_text']", function(){browser.dismiss_alert()})
+        .setValue("//input[@name='insured.relationToPH_text']", '0')
+        .setValue("//input[@name='insured.marriageId_text']", '1')
+        .click("//input[@name='__btnSave']")
+        .pause(1000) 
 
   	  	// fill the insurance data
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
   	  	.waitForElementPresent("(//input[@name='rowid'])[position()=2]", 30000)
-        .pause(1000) 
+  */      .pause(1000) 
   	  	.click("(//input[@name='rowid'])[position()=2]")
   	  	.click("(//input[@name='__btnModify'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -115,25 +115,29 @@ module.exports = {
         .pause(1000)
         // Fill initial Type and then fill chargePeriod and chargeYear
         !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.chargePeriod_text']", "value" ,function(result){
-            if (result.value =='3'){} else {
+        .elementIdAttribute("//input[@name='coverage.chargePeriod_text']", 'value' ,function(result){
+            if (result.value =='3'){console.log(result.value)
+            console.log(result)} else {
               browser
                .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
                .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
+               console.log(result.value)
+               console.log(result)
           }
         },false)}(i)
         // Guarantee charge year
 
         !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.coverageYear']", function(){
+        .elementIdDisplayed("//input[@id='coverage.coveragePeriod']", function(){
           browser
-          .elementIdAttribute("//input[@name='coverage.coverageYear']", "readOnly" ,function(result){
-           if (result.value =='readonly'){} 
+          .elementIdAttribute("//input[@id='coverage.coveragePeriod']", 'class' ,function(result){
+           if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
             else {
               browser
               .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
               .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
-              console.log('coverage.coverageYear'+i)
+              console.log(result.value)
+              console.log(result)
             }
           })
         },false)}(i)
