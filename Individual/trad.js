@@ -117,14 +117,14 @@ module.exports = {
             this
               .click("//input[@name='coverage.amount']")
               .pause(1000)
-              .setValue("//input[@name='coverage.amount']", jsonArra[i]['getamount'])
+              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
            } else {
             browser
               .setValue("//input[@name='coverage.chargePeriod_text']", '1')
               .setValue("//input[@name='coverage.chargeYear']", '20')
               .click("//input[@name='coverage.amount']")
               .pause(1000)
-              .setValue("//input[@name='coverage.amount']", jsonArra[i]['getamount'])
+              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
               .setValue("//input[@name='payNext_text']", '3')
             }
         },false)}(i)

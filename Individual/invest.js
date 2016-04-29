@@ -167,7 +167,7 @@ module.exports = {
         .elementIdAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
          if (result.value =='textfiled textfield_null right readOnly ro'){} else {
           browser
-           .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i-1]['annualmoney'])
+           .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
           }
         },false)}(i)
         browser
