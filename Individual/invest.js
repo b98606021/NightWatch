@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1 ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
@@ -33,18 +33,18 @@ module.exports = {
     	  .setValue('input[name=submissionDate_minguo]', jsonArray[i]['date'])
     	  .useXpath()
     	  .setValue("//input[@name='brbdAcceptanceVO.policyCode_text']",jsonArray[i]['number'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
         writeStream.write('\r\n'+result.value+',')
         })
         var id1 = makeid()
         browser
     	  .setValue("//input[@name='brbdAcceptanceVO.phCertiCode']", id1)
     	  .setValue("//input[@name='brbdAcceptanceVO.insuredCertiCode']", id1)
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.productId_text']", jsonArray[i]['code'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.registerCode']", jsonArray[i]['login'])
@@ -91,7 +91,7 @@ module.exports = {
 
   	  	// Insurance Person 
         .setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
-        .setValue("//input[@name='policyHolderBirthDay_minguo']", '700101')
+        .setValue("//input[@name='policyHolderBirthDay_minguo']", '600101')
         .setValue("//input[@name='policyHolderGender_text']", '1')
         .setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
         .setValue("//input[@name='policyHolderJobClass']", '1')
@@ -112,98 +112,124 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000) 
-  	  	.setValue("//input[@name='coverage.initialType_text']", '12')
-        .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-         if (result.value == '00'){} else {
+  	  	.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['payway'])
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           browser
-            .setValue("//input[@name='payNext_text']", '3')
+          .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
             console.log('paynext'+i)
-          }
-        })
-  	  	.setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
-
-        !function outer(i) { browser
-          .elementIdAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null right readOnly ro'){
+           if (result.value == '00'){} else {
             browser
-              .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
-              console.log('payamount'+i)
-            } else {
-            browser
-              .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
-              console.log('payamount'+i)
+              .setValue("//input[@name='payNext_text']", '3')
+              console.log('paynext'+i)
             }
-        },false)}(i)
-        browser
-  	  	.setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
-  	  	.setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
+          })
+
+          .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+
+          .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
+             console.log('payamount'+i)
+             if (result.value =='textfiled textfield_null right readOnly ro'){
+              browser
+                .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
+                console.log('payamount'+i)
+              } else {
+              browser
+                .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
+                console.log('payamount'+i)
+              }
+          })
+
+          .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
+          .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
 
 
-        .elementIdAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-            .setValue("//input[@name='coverage.payYear']", '70')
-          }
-        })
+          .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
+           if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+            browser
+              .setValue("//input[@name='coverage.payYear']", '70')
+            }
+          })
 
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null readOnly ro'){} else {
-          browser
-            .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
+
+          .getAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
             console.log('paytype'+i)
-          }
+           if (result.value =='textfiled textfield_null readOnly ro'){} else {
+            browser
+              .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
+              console.log('paytype'+i)
+            }
+          })
+
+
+          .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
+           if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+            browser
+             .setValue("//input[@name='coverage.payEnsure']", '10')
+            }
+          })
+
+
+          .getAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
+           if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+            browser
+             .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
+            }
+          })
+
         },false)}(i)
 
-        browser
-        .elementIdAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-           .setValue("//input[@name='coverage.payEnsure']", '10')
-          }
-        })
 
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-           .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
-          }
-        },false)}(i)
         browser
         .setValue("//input[@name='bene.branchCode']", '0040059')
         .setValue("//input[@name='bene.bankAccount']", '16888888888888')
-        //.click("//select[@name='coverage.versionTypeId']/option[@value='368']")
+        .click("//select[@name='coverage.versionTypeId']/option[@value='368']")
   	  	.click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
   	  	.pause(1000)
 
-        // add additional product 
-        /*
+/*        // add additional product 
         .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'])
         .click("//input[@id='proposalCategory001']")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
-        //.clearValue("//input[@name='coverage.initialType_text']")
-        //.setValue("//input[@name='coverage.initialType_text']", '0'+'1')//jsonArray[i]['addpaytype'])
-        !function outer(i) { browser
-          .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-           if (result.value == '00'){} else {
+        .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+           if (result.value == '00'){
+            click("//input[@name='coverage.nhiInsuIndi_text']")
+          } else {
             browser
-              .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
-              .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
+              .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i-1]['addperiod'])
+              .setValue("//input[@name='coverage.chargeYear']", jsonArray[i-1]['addyear'])
             }
-        },false)}(i)
-        browser    
-        .setValue("//input[@name='coverage.amount']", jsonArray[i]['addamount'])
+        })
+        .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+           if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+            browser
+              .setValue("//input[@name='coverage.amount']", "10000")
+            }
+        })
+        .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+           if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+            browser
+              .setValue("//input[@name='coverage.benefitLevel']", "1")
+            }
+        })
+        .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+           if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+            browser
+              .setValue("//input[@name='coverage.unit']", "1")
+            }
+        })
         //.setValue("//input[@name='coverage.benefitLevel']", '5')
         .click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000) 
-        */
+        .pause(1000)
+
+        // add done
+  */      
 
 
   	  	//T_fund setting
@@ -272,6 +298,20 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
+/*
+        // trad claim -- delete when there is no additional insurance
+        .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'])
+        .setValue("//input[@name='review.reviewIndi_text']", '1')
+        .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+        .setValue("//input[@name='review.strVersion']", '1')
+        .click("(//input[@name='__btnSave'])[position()=6]")
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .pause(1000)
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+*/
+        // Final
     		.click("//input[@name='btnSubmit']", function(){browser.accept_alert()})
     		.waitForElementPresent("//div[@classname='header_logo_ls']", 30000)
         .pause(1000)  
@@ -346,7 +386,7 @@ module.exports = {
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
-        .elementIdAttribute("//input[@name='totalIP']", "value" ,function(result){
+        .getAttribute("//input[@name='totalIP']", "value" ,function(result){
         browser
           .setValue("//input[@name='pay_amount']",result.value)
           .setValue("//input[@name='voucherAmount']",result.value)
@@ -381,8 +421,8 @@ module.exports = {
         .click("//input[@classname='button btn']")
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000)
         .pause(3000)
-        .getText("(//td[@classname='table_text_td'])[position()=3]//div[@classname='input']",function(result){
-          writeStream.write(result.value)
+        .getText("(//td[@classname='table_text_td'])[position()=3]//div[@classname='input']", function(result){
+        writeStream.write(result.value)
         })
         .saveScreenshot('./data/invest/' +jsonArray[i]['number']+'search.png')
 
