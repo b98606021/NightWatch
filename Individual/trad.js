@@ -24,7 +24,7 @@ module.exports = {
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
         .waitForElementPresent('div[classname=header_logo_ls]', 10000) 
-        .pause(1000)
+        .pause(1000) 
         .url('http://210.13.77.68:10013/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
         .waitForElementPresent('input[name=submissionDate_minguo]', 10000) 
 
@@ -33,18 +33,18 @@ module.exports = {
     	  .setValue('input[name=submissionDate_minguo]', jsonArray[i]['date'])
     	  .useXpath()
     	  .setValue("//input[@name='brbdAcceptanceVO.policyCode_text']",jsonArray[i]['number'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
         writeStream.write('\r\n'+result.value+',')
         })
         var id1 = makeid()
         browser
         .setValue("//input[@name='brbdAcceptanceVO.phCertiCode']", id1)
         .setValue("//input[@name='brbdAcceptanceVO.insuredCertiCode']", id1)
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.productId_text']", jsonArray[i]['code'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.registerCode']", jsonArray[i]['login'])
@@ -89,7 +89,7 @@ module.exports = {
 
   	  	// Insurance Person 
         .setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
-        .setValue("//input[@name='policyHolderBirthDay_minguo']", '700101')
+        .setValue("//input[@name='policyHolderBirthDay_minguo']", '600101')
         .setValue("//input[@name='policyHolderGender_text']", '1')
         .setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
         .setValue("//input[@name='policyHolderJobClass']", '1')
@@ -111,25 +111,33 @@ module.exports = {
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
   	  	.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['paytype'])
-        !function outer(i) { browser
-          .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-           if (result.value == '00'){
-            this
-              .click("//input[@name='coverage.amount']")
-              .pause(1000)
-              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
-           } else {
-            browser
-              .setValue("//input[@name='coverage.chargePeriod_text']", '1')
-              .setValue("//input[@name='coverage.chargeYear']", '20')
-              .click("//input[@name='coverage.amount']")
-              .pause(1000)
-              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
-              .setValue("//input[@name='payNext_text']", '3')
+
+        !function outer(i) { 
+        browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          browser
+          .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+             if (result.value == '00'){
+              browser
+                .click("//input[@name='coverage.amount']")
+                .pause(1000)
+                .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+             } else {
+              console.log(i)
+              browser
+                .setValue("//input[@name='coverage.chargePeriod_text']", '1')
+                .setValue("//input[@name='coverage.chargeYear']", '20')
+                .click("//input[@name='coverage.amount']")
+                .pause(1000)
+                .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                .setValue("//input[@name='payNext_text']", '3')
             }
+          })
         },false)}(i)
+
         browser
   	  	.click("(//input[@name='__btnSave'])[position()=2]")
+        .click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
@@ -144,12 +152,14 @@ module.exports = {
         //.clearValue("//input[@name='coverage.initialType_text']")
         //.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['addpaytype'])
         !function outer(i) { browser
-          .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
            if (result.value == '00'){} else {
             browser
               .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
               .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
             }
+          })
         },false)}(i)
         browser 
         .setValue("//input[@name='coverage.amount']", jsonArray[i]['addamount'])
@@ -289,7 +299,7 @@ module.exports = {
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
-  	  	.elementIdAttribute("//input[@name='totalIP']", "value" ,function(result){
+  	  	.getAttribute("//input[@name='totalIP']", "value" ,function(result){
   	  	browser
   	  		.setValue("//input[@name='pay_amount']",result.value)
   	  		.setValue("//input[@name='voucherAmount']",result.value)
@@ -298,7 +308,7 @@ module.exports = {
           money = money.replace(/,/g,"")
           writeStream.write(money+',')
         }
-  	  	})
+        })
   	  	.setValue("//input[@name='payMode_text']", '11')
   	  	.click("//input[@name='voucherDate_minguo']")
   	  	.pause(2000)
