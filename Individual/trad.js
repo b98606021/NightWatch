@@ -215,14 +215,27 @@ module.exports = {
     		.pause(1000)
 
         // trad claim
-        .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
-        .setValue("//input[@name='review.reviewIndi_text']", '1')
-        .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-        .setValue("//input[@name='review.strVersion']", '1')
-        .click("(//input[@name='__btnSave'])[position()=6]")
-        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000)
+        !function outer(i) { 
+        browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          browser
+          .getAttribute("//input[@name='review.internalId']", "class", function(result){
+            console.log("review" + result.value)
+            if (result.value == "textfiled textfield_null readOnly ro") {} else {
+              browser
+              .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+              .setValue("//input[@name='review.reviewIndi_text']", '1')
+              .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+              .setValue("//input[@name='review.strVersion']", '1')
+              .click("(//input[@name='__btnSave'])[position()=6]")
+              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+              .pause(1000)
+            }
+          })
+        },false)}(i)
+        
+        browser
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
 

@@ -17,7 +17,7 @@ var writeStream = fs.createWriteStream("data/all_split/"+ now +".csv", [{flags: 
 writeStream.write('Number'+','+'ID'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Tradition' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
+  'Open Tradition' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 3 ; i ++)  { 
       browser
         .frame(null)
         .useCss()
@@ -115,28 +115,82 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
-  	  	.setValue("//input[@name='coverage.initialType_text']", '12')
-        .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-         if (result.value == '00'){
-          this
-            .click("//input[@name='coverage.amount']")
-            .pause(1000)
-            .setValue("//input[@name='coverage.amount']", jsonArray[i-1]['getamount'])
-            console.log('amount'+i)
-         } else {
+  	  	.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['payway'])
+        !function outer(i) { 
+        browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           browser
-            .setValue("//input[@name='coverage.chargePeriod_text']", '1')
-            .setValue("//input[@name='coverage.chargeYear']", '20')
-            .click("//input[@name='coverage.amount']")
-            .pause(1000)
-            .setValue("//input[@name='coverage.amount']", jsonArray[i-1]['getamount'])
-            .setValue("//input[@name='payNext_text']", '3')
-            console.log('amount'+i)
-          }
-        })
+          .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+             if (result.value == '00'){
+              browser
+              .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                  console.log("amount" + i)
+                 if (result.value =='textfiled textfield_null right readOnly ro'){} 
+                  else {
+                  browser
+                    .click("//input[@name='coverage.amount']")
+                    .pause(1000)
+                    .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                    console.log("amount"+i)
+                  }
+                })
+             } else {
+              browser
+                .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
+                .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
+                .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                  console.log("amount" + i)
+                 if (result.value =='textfiled textfield_null right readOnly ro'){} 
+                  else {
+                  browser
+                    .click("//input[@name='coverage.amount']")
+                    .pause(1000)
+                    .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                    console.log("amount"+i)
+                  }
+                })
+                .setValue("//input[@name='payNext_text']", '3')
+            }
+          })
+
+          .getAttribute("//input[@name='coverage.coverageYear']", 'class' ,function(result){
+            if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
+              else {
+                browser
+                .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
+                .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
+                console.log('coveragePeriod' + result.value + i)
+              }
+          })
+
+          // Fill coverage or plan or unit
+          .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['plan'])
+              }
+          })
+
+
+          .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+              console.log('coverage.unit'+i)
+             if (result.value =='textfiled textfield_null right readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.unit']", jsonArray[i]['unit'])
+                console.log('coverage.unit'+i)
+              }
+          })
+
+        },false)}(i)
+
+        browser
   	  	//.setValue("//input[@name='coverage.chargePeriod_text']", '1')
   	  	//.setValue("//input[@name='coverage.chargeYear']", '20')
+        .pause(1000)
   	  	.click("(//input[@name='__btnSave'])[position()=2]")
+        .click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
@@ -150,13 +204,17 @@ module.exports = {
         .pause(1000)
         //.clearValue("//input[@name='coverage.initialType_text']")
         //.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['addpaytype'])
-        .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-         if (result.value == '00'){} else {
-          browser
-            .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
-            .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
-          }
-        })       
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+           if (result.value == '00'){} else {
+            browser
+              .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
+              .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
+            }
+          })
+        },false)}(i)
+        browser 
         .setValue("//input[@name='coverage.amount']", jsonArray[i]['addamount'])
         //.setValue("//input[@name='coverage.benefitLevel']", '5')
         .click("(//input[@name='__btnSave'])[position()=2]")
@@ -210,14 +268,26 @@ module.exports = {
     		.pause(1000)
 
         // trad claim
-        .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
-        .setValue("//input[@name='review.reviewIndi_text']", '1')
-        .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-        .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
-        .click("(//input[@name='__btnSave'])[position()=6]")
-        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000)
+        !function outer(i) { 
+        browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          browser
+          .getAttribute("//input[@name='review.internalId']", "class", function(result){
+            console.log("review" + result.value)
+            if (result.value == "textfiled textfield_null readOnly ro") {} else {
+              browser
+              .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+              .setValue("//input[@name='review.reviewIndi_text']", '1')
+              .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+              .setValue("//input[@name='review.strVersion']", '1')
+              .click("(//input[@name='__btnSave'])[position()=6]")
+              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+              .pause(1000)
+            }
+          })
+        },false)}(i)
+        browser
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
 
