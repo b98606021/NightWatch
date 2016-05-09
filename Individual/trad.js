@@ -288,7 +288,7 @@ module.exports = {
     		.pause(1000)
 
         // trad claim -- delete when there is no additional insurance
-        .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'+k])
+        .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
         .clearValue("//input[@name='review.reviewIndi_text']")
         .setValue("//input[@name='review.reviewIndi_text']", '1')
         .clearValue("//input[@name='review.reviewDate_minguo']")
