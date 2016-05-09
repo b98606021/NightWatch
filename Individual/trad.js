@@ -100,17 +100,17 @@ module.exports = {
         .click("//input[@name='__btnSave']")
         .pause(1000) 
 
-  	  	// fill the insurance data
+        // fill the insurance data
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-  	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-  	  	.waitForElementPresent("(//input[@name='rowid'])[position()=2]", 30000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .waitForElementPresent("(//input[@name='rowid'])[position()=2]", 30000)
         .pause(1000)
-  	  	.click("(//input[@name='rowid'])[position()=2]")
-  	  	.click("(//input[@name='__btnModify'])[position()=2]")
+        .click("(//input[@name='rowid'])[position()=2]")
+        .click("(//input[@name='__btnModify'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-  	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
-  	  	.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['paytype'])
+        .setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['payway'])
 
         !function outer(i) { 
         browser
@@ -119,19 +119,64 @@ module.exports = {
           .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
              if (result.value == '00'){
               browser
-                .click("//input[@name='coverage.amount']")
-                .pause(1000)
-                .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+              .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                  console.log("amount" + i)
+                 if (result.value =='textfiled textfield_null right readOnly ro'){} 
+                  else {
+                  browser
+                    .click("//input[@name='coverage.amount']")
+                    .pause(1000)
+                    .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                    console.log("amount"+i)
+                  }
+                })
              } else {
-              console.log(i)
               browser
-                .setValue("//input[@name='coverage.chargePeriod_text']", '1')
-                .setValue("//input[@name='coverage.chargeYear']", '20')
-                .click("//input[@name='coverage.amount']")
-                .pause(1000)
-                .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
+                .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
+                .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                  console.log("amount" + i)
+                 if (result.value =='textfiled textfield_null right readOnly ro'){} 
+                  else {
+                  browser
+                    .click("//input[@name='coverage.amount']")
+                    .pause(1000)
+                    .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+                    console.log("amount"+i)
+                  }
+                })
+                browser
                 .setValue("//input[@name='payNext_text']", '3')
             }
+          })
+
+          .getAttribute("//input[@name='coverage.coverageYear']", 'class' ,function(result){
+            if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
+              else {
+                browser
+                .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
+                .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
+                console.log('coveragePeriod' + result.value + i)
+              }
+          })
+
+          // Fill coverage or plan or unit
+          .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['plan'])
+              }
+          })
+
+
+          .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null right readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.unit']", jsonArray[i]['unit'])
+                console.log('coverage.unit'+i)
+              }
           })
         },false)}(i)
 
@@ -243,6 +288,21 @@ module.exports = {
     		.pause(1000)
 
         // trad claim -- delete when there is no additional insurance
+        .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'+k])
+        .clearValue("//input[@name='review.reviewIndi_text']")
+        .setValue("//input[@name='review.reviewIndi_text']", '1')
+        .clearValue("//input[@name='review.reviewDate_minguo']")
+        .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+        .clearValue("//input[@name='review.strVersion']")
+        .setValue("//input[@name='review.strVersion']", '1')
+        .click("(//input[@name='__btnSave'])[position()=6]")
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .pause(1000)
+        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+
+/*      // if add additional insurance data, you should open this code
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           for (k=0;k<2;k++){
@@ -264,7 +324,7 @@ module.exports = {
             }(k)
           }
         },false)}(i)
-        
+*/        
         
         // final click
         browser

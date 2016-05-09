@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 3 ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.68:10013/ls/logoutPage.do')
@@ -125,7 +125,14 @@ module.exports = {
             }
           })
 
-          .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+          .isVisible("//input[@name='coverage.amount']", function(result){
+            if (result.value == true) {
+              browser
+              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+              .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
+              .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
+            } else {}
+          })
 
           .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
              console.log('payamount'+i)
@@ -139,9 +146,6 @@ module.exports = {
                 console.log('payamount'+i)
               }
           })
-
-          .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
-          .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
 
 
           .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
@@ -189,7 +193,7 @@ module.exports = {
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
   	  	.pause(1000)
 
-        // add additional product 
+/*        // add additional product 
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
         for (k=0;k<2;k++){
@@ -239,8 +243,7 @@ module.exports = {
             }(k)
           }
         },false)}(i)
-
-        // add done
+*/        // add done
         
 
 
@@ -311,7 +314,7 @@ module.exports = {
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
 
-        // trad claim -- delete when there is no additional insurance
+/*        // trad claim -- delete when there is no additional insurance
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           for (k=0;k<2;k++){
@@ -333,7 +336,7 @@ module.exports = {
             }(k)
           }
         },false)}(i)
-
+*/
         // Final
         browser
     		.click("//input[@name='btnSubmit']", function(){browser.accept_alert()})

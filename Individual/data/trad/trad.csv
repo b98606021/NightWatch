@@ -1,3 +1,2 @@
-date,number,code,login,paytype,getamount,addcode0,addpaytype0,addperiod0,addyear0,addamount0,addplan0,addunit0,addcode1,addpaytype1,addperiod1,addyear1,addamount1,addplan1,addunit1
-105/05/06,00000577240,QWC,STDB0001,12,550000,QTR,00,1,5,300000,1,1
-105/05/06,00000577250,QWC,STDB0001,12,550000,QTR,00,1,5,300000,1,1
+date,number,code,login,version,payway,chargePeriod_text,chargeYear,coveragePeriod,coverageYear,plan,unit,getamount,payamount,customizedPrem,flexible,paytype,annualmoney,addcode0,addpaytype0,addperiod0,addyear0,addamount0,addplan0,addunit0,addcode1,addpaytype1,addperiod1,addyear1,addamount1,addplan1,addunit1
+105/05/09,00000577260,QWC,STDB0001,D,12,1,20,1,1,1,1,300000,100000,100000,10000,12,30000,XDR,1,1,10,10000
