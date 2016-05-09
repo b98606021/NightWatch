@@ -1,0 +1,33 @@
+此資料夾用來造單
+投資型和年金型險種請使用 invest.js
+傳統型和傷害型險種請使用 trad.js
+
+使用前需要注意幾個事項
+
+1. 更動csv保單號碼 (路徑 data/trad/trad.csv (投資年金改data/invest/invest.csv))
+欄位 number 為保單號碼, 請自行去外部契約登入去拿新的號碼
+
+2. 如果要更動不同的項目請看一下csv欄位首欄的英文字
+
+3. 目前投資型投資標的Default為三個, 如要更動投資標的數目
+請尋找 //T_fund setting 下的JS code, 將J改成您要的投資標的數目, 並且去Csv檔案去增減欄位 
+(三項投資標的為 fundcode0,ratio0,fundcode1,ratio1,fundcode2,ratio2)
+(兩項投資標的為 fundcode0,ratio0,fundcode1,ratio1)
+
+4. 傳統傷害行受益人Default設定身故受益人, 年金和投資設定年金受益人
+
+5. 傳統跟投資增加附約時候, // add additional product 的code 必須更動
+
+6. 並且 // trad claim -- delete when there is no additional insurance  的code也必須更動
+
+
+=====版本20160509 v0.2========
+Invest, Trad 更新 附約及 Trad Claim 能夠 for loop的功能,
+並加註第五點以及第六點註解
+
+=====更新說明完畢======
+
+
+=====版本20160506 v0.1========
+第一個版次產生
+=====更新說明完畢======

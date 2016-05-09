@@ -1,5 +1,3 @@
-date,number,code,login,paytype,getamount,addcode,addpaytype,addperiod,addyear,addamount
-105/04/27,00000577050,MDD,STDB0001,12,300000,QTR,00,1,5,300000
-105/04/27,00000577060,MDD,STDB0001,12,300000,QTR,00,1,5,300000
-105/04/27,00000577070,MDD,STDB0001,12,300000,QTR,00,1,5,300000
-105/04/27,00000577080,MDD,STDB0001,12,300000,QTR,00,1,5,300000
+date,number,code,login,paytype,getamount,addcode0,addpaytype0,addperiod0,addyear0,addamount0,addplan0,addunit0,addcode1,addpaytype1,addperiod1,addyear1,addamount1,addplan1,addunit1
+105/05/06,00000577240,QWC,STDB0001,12,550000,QTR,00,1,5,300000,1,1
+105/05/06,00000577250,QWC,STDB0001,12,550000,QTR,00,1,5,300000,1,1
