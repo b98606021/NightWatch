@@ -120,7 +120,7 @@ module.exports = {
           browser
           // Fill initial Type and then fill chargePeriod and chargeYear
           .isVisible("//input[@name='coverage.chargePeriod_text']", function(result){
-            console.log(result + "coverage Period \n")
+            console.log(result.vaule + "coverage Period \n")
             if (result.value = true) {
               browser
               .getAttribute("//input[@name='coverage.initialType_text']" ,'value', function(result){
@@ -181,6 +181,7 @@ module.exports = {
           })
 
           .isVisible("//input[@name='coverage.unit']", function(result){
+            console.log(result.vaule + "coverage.unit")
             if (result.value == true) {
             browser
             .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
@@ -196,7 +197,7 @@ module.exports = {
 
           //payamount
           .isVisible("//input[@name='coverage.stdPremAf']", function(result){
-            console.log('coverage.stdPremAf'+i)
+            console.log(result.vaule + "coverage.unit" + i)
             if (result.value == true) {
               browser
               .getAttribute("//input[@name='coverage.stdPremAf']", "disabled" ,function(result){
@@ -214,7 +215,7 @@ module.exports = {
 
           //customized payamount
           .isVisible("//input[@name='coverage.customizedPrem']", function(result){
-            console.log('coverage.customizedPrem'+i)
+            console.log(result.vaule +'coverage.customizedPrem'+i)
             if (result.value == true) {
             browser
              .setValue("//input[@name='coverage.customizedPrem']", jsonArray[i]['customizedPrem'])
@@ -225,7 +226,7 @@ module.exports = {
 
           //flexible payamount
           .isVisible("//input[@name='coverage.applyAmount']", function(result){
-            console.log('coverage.applyAmount'+i)
+            console.log(result.vaule +'coverage.applyAmount'+i)
             if (result.value == true) {
             browser
              .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
@@ -235,7 +236,7 @@ module.exports = {
 
           //important thing
           .isVisible("//input[@name='coverage.agreeReadIndi_text']", function(result){
-            console.log('coverage.agreeReadIndi_text'+i)
+            console.log(result.vaule +'coverage.agreeReadIndi_text'+i)
             if (result.value == true) {
             browser
              .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
@@ -245,7 +246,7 @@ module.exports = {
 
           // annual getamount
           .isVisible("//input[@name='coverage.payYear']", function(result){
-            console.log('coverage.payYear'+i)
+            console.log(result.vaule +'coverage.payYear'+i)
             if (result.value == true) {
               browser
               .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
@@ -257,29 +258,45 @@ module.exports = {
               })
             }
           })
-///////
+
           // payType_text
-          .getAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null readOnly ro'){} else {
-            browser
-              .clearValue("//input[@name='coverage.payType_text']")
-              .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
-              console.log('coverage.payType_text'+i)
+          .isVisible("//input[@name='coverage.payType_text']", function(result){
+            console.log(result.vaule +'coverage.payYear'+i)
+            if (result.value == true) {
+              .getAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
+               if (result.value =='textfiled textfield_null readOnly ro'){} else {
+                browser
+                  .clearValue("//input[@name='coverage.payType_text']")
+                  .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
+                  console.log('coverage.payType_text'+i)
+                }
+              })
             }
           })
 
           // payEnsure
-          .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-            browser
-             .setValue("//input[@name='coverage.payEnsure']", '10')
+          .isVisible("//input[@name='coverage.payEnsure']", function(result){
+            console.log(result.vaule +'coverage.payYear'+i)
+            if (result.value == true) {
+              .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
+               if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+                browser
+                 .setValue("//input[@name='coverage.payEnsure']", '10')
+                }
+              })
             }
           })
 
-          .getAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
-             if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-              browser
-               .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
+
+          .isVisible("//input[@name='coverage.instalmentAmount']", function(result){
+            console.log(result.vaule +'coverage.instalmentAmount'+i)
+            if (result.value == true) {
+              .getAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
+                 if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+                  browser
+                   .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
+                }
+              })
             }
           })
 
@@ -447,18 +464,21 @@ module.exports = {
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
             .isVisible("//input[@name='review.internalId']", function(result){
-                if (result.value == true) {
-                browser
-                  .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
-                  .pause(1000)
-                  .setValue("//input[@name='review.reviewIndi_text']", '1')
-                  .pause(1000)
-                  .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-                  .pause(1000)
-                  .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
-                  .pause(1000)
-                  console.log('review.internalId'+i)
-              } else{}
+                if (result.value == true) { browser
+                  .getAttribute("//input[@name='review.internalId']", 'class' ,function(result){
+                    if (result.value == "textfiled textfiled_null readOnly ro") {} else {
+                      .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+                      .pause(1000)
+                      .setValue("//input[@name='review.reviewIndi_text']", '1')
+                      .pause(1000)
+                      .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+                      .pause(1000)
+                      .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
+                      .pause(1000)
+                      console.log('review.internalId'+i)
+                    }
+                  })     
+                } else{}
             })
         },false)}(i)        
 

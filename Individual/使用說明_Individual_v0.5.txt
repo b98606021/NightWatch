@@ -24,6 +24,14 @@
 6. 並且 // trad claim -- delete when there is no additional insurance  的code也必須更動
 
 
+
+=====版本20160510 v0.5========
+將傳統型保單 => Claim部分去做判斷了
+
+
+=====更新說明完畢======
+
+
 =====版本20160510 v0.4========
 將冒煙功能納進來, 另外invest可用年金型保單造單了
 

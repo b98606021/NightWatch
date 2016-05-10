@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1 ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.85:12000/ls/logoutPage.do')
@@ -248,7 +248,7 @@ module.exports = {
 
 
   	  	//T_fund setting
-  	  	for (j = 0; j < 1 ; j ++) {
+  	  	for (j = 0; j < 2 ; j ++) {
   	  	browser
     		.setValue("//input[@name='investRate.fundCode']", jsonArray[i]['fundcode'+j])
     		.setValue("//input[@name='investRate.assignRate']", jsonArray[i]['ratio'+j])
