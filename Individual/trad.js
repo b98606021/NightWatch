@@ -17,7 +17,7 @@ module.exports = {
       browser
         .frame(null)
         .useCss()
-        .url('http://210.13.77.68:10013/ls/logoutPage.do')
+        .url('http://210.13.77.85:12000/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
         .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
@@ -25,7 +25,7 @@ module.exports = {
         .click('input[name=Submit2]')
         .waitForElementPresent('div[classname=header_logo_ls]', 10000) 
         .pause(1000) 
-        .url('http://210.13.77.68:10013/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
+        .url('http://210.13.77.85:12000/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
         .waitForElementPresent('input[name=submissionDate_minguo]', 10000) 
 
         // Open New 
@@ -53,7 +53,7 @@ module.exports = {
 
   	  	//Distribute to fill new
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
-  	  	.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=DetailRegistration&taskId=6')
+  	  	.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=DetailRegistration&taskId=6')
   	  	.useXpath()
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
@@ -68,7 +68,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
   	  	//fill new 
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -333,7 +333,7 @@ module.exports = {
 
 
     		// distribute to confirm
-    		.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=Verification&taskId=10')
+    		.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=Verification&taskId=10')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -347,7 +347,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
   	  	// turn to confirm
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=Verification&taskId=10&syskey_request_token=752ba247eba263311fb36ec58db42536')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=Verification&taskId=10&syskey_request_token=752ba247eba263311fb36ec58db42536')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -365,7 +365,7 @@ module.exports = {
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
   	  	// distribute to manual confirmation
-  	  	.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=ManualUW&taskId=8')
+  	  	.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=ManualUW&taskId=8')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -379,7 +379,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
   	  	// turn to manual confirmation
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -395,7 +395,7 @@ module.exports = {
 
   	  	// Pay money
   	  	.useXpath()
-  	  	.url('http://210.13.77.68:10013/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
+  	  	.url('http://210.13.77.85:12000/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
   	  	.waitForElementPresent("//input[@classname='button btn']", 30000) 
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
@@ -424,7 +424,7 @@ module.exports = {
         .saveScreenshot('./data/trad/' +jsonArray[i]['number']+'payamount.png')
 
 		    // Check
-        .url('http://210.13.77.68:10013/ls/qry/commonquery.CommonQuery.do?syskey_request_token=d83d39e2acdfa20e8f903f934aa511ab&current_module_id=301744')
+        .url('http://210.13.77.85:12000/ls/qry/commonquery.CommonQuery.do?syskey_request_token=d83d39e2acdfa20e8f903f934aa511ab&current_module_id=301744')
         .waitForElementPresent("//input[@classname='button btn']", 30000) 
         .click("//input[@name='qryType']")
         .pause(1000)

@@ -24,6 +24,13 @@
 6. 並且 // trad claim -- delete when there is no additional insurance  的code也必須更動
 
 
+=====版本20160510 v0.4========
+將冒煙功能納進來, 另外invest可用年金型保單造單了
+
+更改FT環境網址
+=====更新說明完畢======
+
+
 =====版本20160509 v0.3========
 將冒煙功能納進來, 另外invest可用年金型保單造單了
 

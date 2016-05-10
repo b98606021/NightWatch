@@ -16,7 +16,7 @@ module.exports = {
   'Open all' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (var i = 0; i < jsonArray.length ; i++ )  { 
       browser
         .useCss()
-        .url('http://210.13.77.68:10013/ls/logoutPage.do')
+        .url('http://210.13.77.85:12000/ls/logoutPage.do')
         .waitForElementPresent('body', 30000)
         .setValue('input[name=userName]', 'IBM7')
         .clearValue('input[name=userPassword]')
@@ -24,7 +24,7 @@ module.exports = {
         .click('input[name=Submit2]')
         .waitForElementPresent('div[classname=header_logo_ls]', 10000) 
         .pause(1000) /*
-        .url('http://210.13.77.68:10013/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
+        .url('http://210.13.77.85:12000/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
         .waitForElementPresent('input[name=submissionDate_minguo]', 10000) 
         .pause(1000)
 
@@ -33,18 +33,18 @@ module.exports = {
     	  .setValue('input[name=submissionDate_minguo]', jsonArray[i]['date'])
     	  .useXpath()
     	  .setValue("//input[@name='brbdAcceptanceVO.policyCode_text']",jsonArray[i]['number'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.policyCode_text']", "value" ,function(result){
         writeStream.write('\r\n'+result.value+',')
         })
         var id1 = makeid()
         browser
         .setValue("//input[@name='brbdAcceptanceVO.phCertiCode']", id1)
         .setValue("//input[@name='brbdAcceptanceVO.insuredCertiCode']", id1)
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.insuredCertiCode']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.productId_text']", jsonArray[i]['code'])
-        .elementIdAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
+        .getAttribute("//input[@name='brbdAcceptanceVO.productId_text']", "value" ,function(result){
         writeStream.write(result.value+',')
         })
     	  .setValue("//input[@name='brbdAcceptanceVO.registerCode']", jsonArray[i]['login'])
@@ -53,7 +53,7 @@ module.exports = {
 
   	  	//Distribute to fill new
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
-  	  	.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=DetailRegistration&taskId=6')
+  	  	.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=DetailRegistration&taskId=6')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -68,7 +68,7 @@ module.exports = {
 */
   	  	//fill new 
         .useXpath()
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -105,7 +105,7 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
   	  	.waitForElementPresent("(//input[@name='rowid'])[position()=2]", 30000)
-  */      .pause(1000) 
+  */    .pause(1000) 
   	  	.click("(//input[@name='rowid'])[position()=2]")
   	  	.click("(//input[@name='__btnModify'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -113,250 +113,320 @@ module.exports = {
         .pause(1000) 
   	  	.setValue("//input[@name='coverage.initialType_text']", jsonArray[i]['payway'])
         .pause(1000)
-        // Fill initial Type and then fill chargePeriod and chargeYear
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.chargePeriod_text']", 'value' ,function(result){
-            if (result.value =='3'){console.log(result.value)
-            console.log(result)} else {
-              browser
-               .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
-               .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
-               console.log(result.value)
-               console.log(result)
-          }
-        },false)}(i)
-        // Guarantee charge year
 
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@id='coverage.coveragePeriod']", function(){
-          browser
-          .elementIdAttribute("//input[@id='coverage.coveragePeriod']", 'class' ,function(result){
-           if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
-            else {
-              browser
-              .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
-              .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
-              console.log(result.value)
-              console.log(result)
-            }
-          })
-        },false)}(i)
-        // Fill coverage or plan or unit
-
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.amount']", function(){
-          browser
-          .elementIdAttribute("//input[@name='coverage.amount']", "class" ,function(result){
-           if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
-            else {
-            browser
-              .click("//input[@name='coverage.amount']")
-              .pause(1000)
-              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
-              console.log('coverage.amount'+i)
-            }
-          })
-        },false)}(i)
-
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.benefitLevel']", function(){
-          browser
-          .elementIdAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null readOnly ro'){} 
-            else {
-            browser
-              .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['plan'])
-            }
-          })
-        },false)}(i)
-
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.unit']", function(){
-          browser
-          .elementIdAttribute("//input[@name='coverage.unit']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null right readOnly ro'){} 
-            else {
-            browser
-              .setValue("//input[@name='coverage.unit']", jsonArray[i]['unit'])
-              console.log('coverage.unit'+i)
-            }
-          })
-        },false)}(i)
-
-        //payamount
+            
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           browser
-          .elementIdAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
-           if (result.value =='textfiled textfield_null right readOnly ro'){
+          // Fill initial Type and then fill chargePeriod and chargeYear
+          .isVisible("//input[@name='coverage.chargePeriod_text']", function(result){
+            console.log(result + "coverage Period \n")
+            if (result.value = true) {
+              browser
+              .getAttribute("//input[@name='coverage.initialType_text']" ,'value', function(result){
+                  if (result.value =='00'){} else {
+                    browser
+                     .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
+                     .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
+                     console.log('coverage.chargePeriod_text' + result.value + i)
+                }
+              })
+            } else{}
+          })
+
+          // Guarantee charge year
+          .isVisible("//input[@name='coverage.coveragePeriod']", function(result){
+            console.log(result.value + "coverage.coveragePeriod")
+            if (result.value == true) {
             browser
-              .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
-              console.log('coverage.stdPremAf'+i)
-            } else {
+            .getAttribute("//input[@name='coverage.coverageYear']", 'class' ,function(result){
+             if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
+              else {
+                browser
+                .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
+                .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
+                console.log('coveragePeriod' + result.value + i)
+              }
+            })}
+          })
+
+          // Fill coverage or plan or unit
+          .isVisible("//input[@name='coverage.amount']", function(result){
+            console.log(result.value + "coverage.amount")
+            if (result.value == true) {
+              browser
+              .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+              console.log("amount" + result.value)
+               if (result.value =='textfiled textfield_null right readOnly ro'){} 
+              else {
+              browser
+                .click("//input[@name='coverage.amount']")
+                .pause(1000)
+                .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
+              }
+            })}
+          })
+
+          .isVisible("//input[@name='coverage.benefitLevel']", function(result){
+            console.log(result.value + "bene")
+            if (result.value == true) {
             browser
-              .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
-              console.log('coverage.stdPremAf'+i)
+            .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['plan'])
+              }
+            })}
+          })
+
+          .isVisible("//input[@name='coverage.unit']", function(result){
+            if (result.value == true) {
+            browser
+            .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+              console.log('coverage.unit'+i)
+             if (result.value =='textfiled textfield_null right readOnly ro'){} 
+              else {
+              browser
+                .setValue("//input[@name='coverage.unit']", jsonArray[i]['unit'])
+                console.log('coverage.unit'+i)
+              }
+            })}
+          })
+
+          //payamount
+          .isVisible("//input[@name='coverage.stdPremAf']", function(result){
+            console.log('coverage.stdPremAf'+i)
+            if (result.value == true) {
+              browser
+              .getAttribute("//input[@name='coverage.stdPremAf']", "disabled" ,function(result){
+                console.log('coverage.stdPremAf'+result.value)
+               if (result.value =='disabled'){
+                browser
+                  .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
+                } else {
+                browser
+                  .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
+                }
+              })
             }
           })
-        },false)}(i)
 
-        //customized payamount
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.customizedPrem']", function(){
-          browser
-           .setValue("//input[@name='coverage.customizedPrem']", jsonArray[i]['customizedPrem'])
-           console.log('coverage.customizedPrem'+i)
-        },false)}(i)
+          //customized payamount
+          .isVisible("//input[@name='coverage.customizedPrem']", function(result){
+            console.log('coverage.customizedPrem'+i)
+            if (result.value == true) {
+            browser
+             .setValue("//input[@name='coverage.customizedPrem']", jsonArray[i]['customizedPrem'])
+             console.log('coverage.customizedPrem'+i)
+            }
+          })
 
-        //flexible payamount
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.applyAmount']", function(){
-          browser
-           .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
-           console.log('coverage.applyAmount'+i)
-        },false)}(i)
 
-        //important thing
-        browser
-        .elementIdDisplayed("//input[@name='coverage.agreeReadIndi_text']", function(){
-          browser
-           .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
-        })
+          //flexible payamount
+          .isVisible("//input[@name='coverage.applyAmount']", function(result){
+            console.log('coverage.applyAmount'+i)
+            if (result.value == true) {
+            browser
+             .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
+             console.log('coverage.applyAmount'+i)
+            }
+          })
 
-        // annual getamount
-        .elementIdDisplayed("//input[@name='coverage.chargePeriod_text']", function(){
-          browser
-          .elementIdAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
+          //important thing
+          .isVisible("//input[@name='coverage.agreeReadIndi_text']", function(result){
+            console.log('coverage.agreeReadIndi_text'+i)
+            if (result.value == true) {
+            browser
+             .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
+             console.log('coverage.agreeReadIndi_text'+i)
+            }
+          })
+
+          // annual getamount
+          .isVisible("//input[@name='coverage.payYear']", function(result){
+            console.log('coverage.payYear'+i)
+            if (result.value == true) {
+              browser
+              .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
+                console.log('coverage.chargePeriod_text'+i)
+               if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+                browser
+                  .setValue("//input[@name='coverage.payYear']", '70')
+                }
+              })
+            }
+          })
+///////
+          // payType_text
+          .getAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
+           if (result.value =='textfiled textfield_null readOnly ro'){} else {
+            browser
+              .clearValue("//input[@name='coverage.payType_text']")
+              .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
+              console.log('coverage.payType_text'+i)
+            }
+          })
+
+          // payEnsure
+          .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
-              .setValue("//input[@name='coverage.payYear']", '70')
+             .setValue("//input[@name='coverage.payEnsure']", '10')
             }
           })
-        })
 
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null readOnly ro'){} else {
-          browser
-            .clearValue("//input[@name='coverage.payType_text']")
-            .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
-            console.log('coverage.payType_text'+i)
-          }
+          .getAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+              browser
+               .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
+            }
+          })
+
         },false)}(i)
 
         browser
-        .elementIdAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-           .setValue("//input[@name='coverage.payEnsure']", '10')
-          }
-        })
-
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-           .setValue("//input[@name='coverage.instalmentAmount']", jsonArray[i]['annualmoney'])
-          }
-        },false)}(i)
-
-        browser
-  	  	.click("(//input[@name='__btnSave'])[position()=2]")
-        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-  	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-  	  	.pause(1000)
-        // fill the insurance data over
-
-        // add additional product 
-        /*
-        .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'])
-        .click("//input[@id='proposalCategory001']")
-        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000)
-        //.clearValue("//input[@name='coverage.initialType_text']")
-        //.setValue("//input[@name='coverage.initialType_text']", '0'+'1')//jsonArray[i]['addpaytype'])
-        !function outer(i) { browser
-        .elementIdAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-         if (result.value == '00'){} else {
-          browser
-            .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'])
-            .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'])
-          }
-        },false)}(i)
-
-        browser
-        .setValue("//input[@name='coverage.amount']", jsonArray[i]['addamount'])
-        //.setValue("//input[@name='coverage.benefitLevel']", '5')
+        .click("(//input[@name='__btnSave'])[position()=2]")
         .click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000) 
-        */
+        .pause(1000)
+
+        // fill the insurance data over
 
 
-  	  	//T_fund setting
+/*        // add additional product 
         !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='investRate.fundCode']", function(){
-          browser
-            for (j = 0; j < 3 ; j ++) {
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+        for (k=0;k<2;k++){
+          !function outer(k) { 
             browser
-            .setValue("//input[@name='investRate.fundCode']", jsonArray[i]['fundcode'+j])
-            .setValue("//input[@name='investRate.assignRate']", jsonArray[i]['ratio'+j])
-            .click("(//input[@name='__btnSave'])[position()=3]")
+            .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'+k])
+            .click("//input[@id='proposalCategory001']")
+            .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+            .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+            .pause(1000)          
+              .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+               if (result.value == '00'){
+                click("//input[@name='coverage.nhiInsuIndi_text']")
+              } else {
+                console.log(k)
+                browser
+                  .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'+k])
+                  .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'+k])
+                }
+              })
+              .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                 if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+                  browser
+                    .setValue("//input[@name='coverage.amount']",jsonArray[i]['addamount'+k])
+                  }
+              })
+              .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+                 if (result.value == 'textfiled textfield_null readOnly ro'){} else {
+                  browser
+                    .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['addplan'+k])
+                  }
+              })
+              .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+                 if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+                  browser
+                    .setValue("//input[@name='coverage.unit']", jsonArray[i]['addunit'+k])
+                  }
+              })
+            
+
+            browser
+            //.setValue("//input[@name='coverage.benefitLevel']", '5')
+            .click("(//input[@name='__btnSave'])[position()=2]")
             .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
             .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
             .pause(1000)
-            }
+            }(k)
+          }
         },false)}(i)
+*/        // add done
 
+        //T_fund setting
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          for (k = 0; k < 3 ; k ++) {
+            !function outer(k) { 
+              browser
+              .isVisible("//input[@name='investRate.fundCode']", function(result){
+                  if (result.value == true) {
+                  browser
+                    .setValue("//input[@name='investRate.fundCode']", jsonArray[i]['fundcode'+k])
+                    .setValue("//input[@name='investRate.assignRate']", jsonArray[i]['ratio'+k])
+                    .click("(//input[@name='__btnSave'])[position()=3]")
+                    .waitForElementNotPresent("//div[@classname='maskdivgen']","100000")
+                    .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", "30000")
+                    .pause(1000)
+                  }
+              })
+            }(k)
+          }
+        },false)}(i)       
+        //t_fund over
+
+        //paymode
         browser
-    		//t_fund over
-    		
-    		//paymode
         .pause(1000)
-    		.setValue("//input[@name='payMode_text']", '3')
+        .setValue("//input[@name='payMode_text']", '3')
         .pause(1000)
-        .elementIdAttribute("//input[@name='payNext_text']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           browser
-           .setValue("//input[@name='payNext_text']", '3')
-           .pause(1000)
-          }
-        })
-        .elementIdAttribute("//input[@name='aplPermit_text']", "class" ,function(result){
-         if (result.value =='textfiled textfield_null right readOnly ro'){} else {
-          browser
-           .setValue("//input[@name='aplPermit_text']", '2')
-           .pause(1000)
-          }
-        })
+          .getAttribute("//input[@name='payNext_text']", "class" ,function(result){
+            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+              browser
+               .setValue("//input[@name='payNext_text']", '3')
+               .pause(1000)
+              }
+          })
 
-    		//benificial person
-        .setValue("//input[@name='bene.nbBeneficiaryType']", '5')
-        .setValue("//input[@name='bene.designation']", '')
+          .getAttribute("//input[@name='aplPermit_text']", "class" ,function(result){
+             if (result.value =='textfiled textfield_null right readOnly ro'){} else {
+              browser
+               .setValue("//input[@name='aplPermit_text']", '2')
+               .pause(1000)
+            }
+          })
+        },false)}(i)   
+
+        //benificial person
+        browser
+        .setValue("//input[@name='bene.nbBeneficiaryType']", '1')
+        .setValue("//input[@name='bene.designation']", '1')
+        .setValue("//input[@name='bene.name']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
+        .clearValue("//input[@name='bene.certiCode']") 
+        var id2 = makeid()
+        browser
+        .setValue("//input[@name='bene.certiCode']", id2) 
+        .setValue("//input[@name='bene.shareOrder']", '1') 
+        .setValue("//input[@name='bene.shareRate']", '100') 
         .click("(//input[@name='__btnSave'])[position()=4]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000) 
+
 
         // height and weight
-        .elementIdDisplayed("//input[@name='insured.height']", function(){
+        .isVisible("//input[@name='insured.height']", function(){
           browser
             .setValue("//input[@name='insured.height']", '180')
             .pause(1000)
         })
-        .elementIdDisplayed("//input[@name='insured.weight']", function(){
+        .isVisible("//input[@name='insured.weight']", function(){
           browser
             .setValue("//input[@name='insured.weight']", '70')
             .pause(1000)
         })
-        .elementIdDisplayed("//input[@name='insured.notifyIndi_text']", function(){
+        .isVisible("//input[@name='insured.notifyIndi_text']", function(){
           browser
             .setValue("//input[@name='insured.notifyIndi_text']", '2')
             .pause(1000)
         })
-        .elementIdDisplayed("(//input[@name='__btnSave'])[position()=5]", function(){
+        .isVisible("(//input[@name='__btnSave'])[position()=5]", function(){
           browser
             .click("(//input[@name='__btnSave'])[position()=5]")
             .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -364,52 +434,65 @@ module.exports = {
             .pause(1000)
         })
 
-
-    		//rest data
-    		.setValue("//input[@name='otherCheckIndi_text']", '1')
-    		.setValue("//input[@name='singCompleteIndi_text']", '1')
-    		.setValue("//input[@name='userConfirmIndi_text']", '1')
-    		.click("(//input[@name='docType'])[position()=3]")
+        //rest data
+        .setValue("//input[@name='otherCheckIndi_text']", '1')
+        .setValue("//input[@name='singCompleteIndi_text']", '1')
+        .setValue("//input[@name='userConfirmIndi_text']", '1')
+        .click("(//input[@name='docType'])[position()=3]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-    		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-    		.pause(1000)
+        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+        .pause(1000)
 
         // trad claim
         !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='review.internalId']", function(){
-          browser
-            .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
-            .pause(1000)
-            console.log('review.internalId'+i)
-        },false)}(i)
+          .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
+            .isVisible("//input[@name='review.internalId']", function(result){
+                if (result.value == true) {
+                browser
+                  .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+                  .pause(1000)
+                  .setValue("//input[@name='review.reviewIndi_text']", '1')
+                  .pause(1000)
+                  .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+                  .pause(1000)
+                  .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
+                  .pause(1000)
+                  console.log('review.internalId'+i)
+              } else{}
+            })
+        },false)}(i)        
 
-        browser
-        .elementIdDisplayed("//input[@name='review.reviewIndi_text']", function(){
-          browser
-            .setValue("//input[@name='review.reviewIndi_text']", '1')
-            .pause(1000)
-        })
 
+/*        // trad claim -- delete when there is no additional insurance
         !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='review.reviewDate_minguo']", function(){
-          browser
-            .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-            .pause(1000)
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
+          for (k=0;k<2;k++){
+            !function outer(k) { browser
+              browser
+              .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'+k])
+              .clearValue("//input[@name='review.reviewIndi_text']")
+              .setValue("//input[@name='review.reviewIndi_text']", '1')
+              .clearValue("//input[@name='review.reviewDate_minguo']")
+              .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+              .clearValue("//input[@name='review.strVersion']")
+              .setValue("//input[@name='review.strVersion']", '1')
+              .click("(//input[@name='__btnSave'])[position()=6]")
+              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+              .pause(1000)
+              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+            }(k)
+          }
         },false)}(i)
+*/
 
-        !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='review.strVersion']", function(){
-          browser
-            .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
-            .pause(1000)
-        },false)}(i)
 
         browser
         .click("(//input[@name='__btnSave'])[position()=6]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
-
         // final click
     		.click("//input[@name='btnSubmit']", function(){browser.accept_alert()})
     		.waitForElementPresent("//div[@classname='header_logo_ls']", 30000)
@@ -417,7 +500,7 @@ module.exports = {
 
 
     		// distribute to confirm
-    		.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=Verification&taskId=10')
+    		.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=Verification&taskId=10')
       	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -431,7 +514,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
   	  	// turn to confirm
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=Verification&taskId=10&syskey_request_token=752ba247eba263311fb36ec58db42536')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=Verification&taskId=10&syskey_request_token=752ba247eba263311fb36ec58db42536')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -450,7 +533,7 @@ module.exports = {
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
   	  	// distribute to manual confirmation
-  	  	.url('http://210.13.77.68:10013/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=ManualUW&taskId=8')
+  	  	.url('http://210.13.77.85:12000/ls/pub/taskmonitor/taskReassignMain.do?procName=PA Process&taskName=ManualUW&taskId=8')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -464,7 +547,7 @@ module.exports = {
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
   	  	// turn to manual confirmation
-  	  	.url('http://210.13.77.68:10013/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
+  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
   	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
   	  	.click("//input[@name='search']")
@@ -480,12 +563,12 @@ module.exports = {
 
   	  	// Pay money
   	  	.useXpath()
-  	  	.url('http://210.13.77.68:10013/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
+  	  	.url('http://210.13.77.85:12000/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
   	  	.waitForElementPresent("//input[@classname='button btn']", 30000) 
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
-        .elementIdAttribute("//input[@name='totalIP']", "value" ,function(result){
+        .getAttribute("//input[@name='totalIP']", "value" ,function(result){
         browser
           .setValue("//input[@name='pay_amount']",result.value)
           .setValue("//input[@name='voucherAmount']",result.value)
@@ -510,7 +593,7 @@ module.exports = {
 
 
         // Check
-        .url('http://210.13.77.68:10013/ls/qry/commonquery.CommonQuery.do?syskey_request_token=d83d39e2acdfa20e8f903f934aa511ab&current_module_id=301744')
+        .url('http://210.13.77.85:12000/ls/qry/commonquery.CommonQuery.do?syskey_request_token=d83d39e2acdfa20e8f903f934aa511ab&current_module_id=301744')
         .waitForElementPresent("//input[@classname='button btn']", 30000) 
         .click("//input[@name='qryType']")
         .pause(1000)
