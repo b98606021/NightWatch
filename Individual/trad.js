@@ -188,62 +188,59 @@ module.exports = {
         .pause(1000)
 
 
-        /*
-        // add additional product 
+       // add additional product 
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
-        for (k=0;k<2;k++){
-          !function outer(k) { browser
-            browser
-            .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'+k])
-            .click("//input[@id='proposalCategory001']")
-            .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-            .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-            .pause(1000)          
-              .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
-               if (result.value == '00'){
-                click("//input[@name='coverage.nhiInsuIndi_text']")
-              } else {
-                console.log(k)
-                browser
-                  .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'+k])
-                  .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'+k])
+          for (k=0;k<2;k++){
+            !function outer(k) { 
+                if (jsonArray[i]['addcode'+k] == "") {} else { 
+                  browser
+                  .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'+k])
+                  .click("//input[@id='proposalCategory001']")
+                  .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                  .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                  .pause(1000)          
+                    .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+                     if (result.value == '00'){
+                      click("//input[@name='coverage.nhiInsuIndi_text']")
+                    } else {
+                      console.log(k)
+                      browser
+                        .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['addperiod'+k])
+                        .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['addyear'+k])
+                      }
+                    })
+                    .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+                       if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+                        browser
+                          .setValue("//input[@name='coverage.amount']",jsonArray[i]['addamount'+k])
+                        }
+                    })
+                    .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
+                       if (result.value == 'textfiled textfield_null readOnly ro'){} else {
+                        browser
+                          .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['addplan'+k])
+                        }
+                    })
+                    .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
+                       if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+                        browser
+                          .setValue("//input[@name='coverage.unit']", jsonArray[i]['addunit'+k])
+                        }
+                    })
+                  browser
+                  .click("(//input[@name='__btnSave'])[position()=2]")
+                  .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                  .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                  .pause(1000)
                 }
-              })
-              .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
-                 if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
-                  browser
-                    .setValue("//input[@name='coverage.amount']",jsonArray[i]['addamount'+k])
-                  }
-              })
-              .getAttribute("//input[@name='coverage.benefitLevel']", "class" ,function(result){
-                 if (result.value == 'textfiled textfield_null readOnly ro'){} else {
-                  browser
-                    .setValue("//input[@name='coverage.benefitLevel']", jsonArray[i]['addplan'+k])
-                  }
-              })
-              .getAttribute("//input[@name='coverage.unit']", "class" ,function(result){
-                 if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
-                  browser
-                    .setValue("//input[@name='coverage.unit']", jsonArray[i]['addunit'+k])
-                  }
-              })
-            
-
-            browser
-            //.setValue("//input[@name='coverage.benefitLevel']", '5')
-            .click("(//input[@name='__btnSave'])[position()=2]")
-            .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-            .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-            .pause(1000)
             }(k)
           }
         },false)}(i)
-
         // add done
-        */
 		
     		//paymode
+        browser
     		.setValue("//input[@name='aplPermit_text']", '2')
     		.setValue("//input[@name='payMode_text']", '3')
     		.pause(1000)
@@ -287,7 +284,7 @@ module.exports = {
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
 
-        // trad claim -- delete when there is no additional insurance
+        // trad claim 
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
             .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
@@ -306,29 +303,35 @@ module.exports = {
             })
         },false)}(i)        
 
-/*      // if add additional insurance data, you should open this code
+        // trad claim -- delete when there is no additional insurance
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           for (k=0;k<2;k++){
             !function outer(k) { browser
-              browser
-              .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'+k])
-              .clearValue("//input[@name='review.reviewIndi_text']")
-              .setValue("//input[@name='review.reviewIndi_text']", '1')
-              .clearValue("//input[@name='review.reviewDate_minguo']")
-              .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-              .clearValue("//input[@name='review.strVersion']")
-              .setValue("//input[@name='review.strVersion']", '1')
-              .click("(//input[@name='__btnSave'])[position()=6]")
-              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-              .pause(1000)
-              .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-              .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                if (jsonArray[i]['addcode'+k] =="") {} else {
+                  browser
+                  .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
+                    if (result.value == "textfiled textfield_null readOnly ro") {} else {
+                      browser
+                      .setValue("//input[@name='review.internalId']", jsonArray[i]['addcode'+k])
+                      .clearValue("//input[@name='review.reviewIndi_text']")
+                      .setValue("//input[@name='review.reviewIndi_text']", '1')
+                      .clearValue("//input[@name='review.reviewDate_minguo']")
+                      .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+                      .clearValue("//input[@name='review.strVersion']")
+                      .setValue("//input[@name='review.strVersion']", '1')
+                      .click("(//input[@name='__btnSave'])[position()=6]")
+                      .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                      .pause(1000)
+                      .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                    }
+                  })
+                }
             }(k)
           }
         },false)}(i)
-*/        
         
         // final click
         browser
