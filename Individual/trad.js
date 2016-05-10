@@ -291,7 +291,7 @@ module.exports = {
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
             .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
-                if (result.value == "textfiled textfiled_null readOnly ro") {} else {
+                if (result.value == "textfiled textfield_null readOnly ro") {} else {
                 browser
                   .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
                   .pause(1000)
