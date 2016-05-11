@@ -255,7 +255,9 @@ module.exports = {
         var id2 = makeid()
         browser
         .setValue("//input[@name='bene.certiCode']", id2) 
+        .clearValue("//input[@name='bene.shareOrder']") 
         .setValue("//input[@name='bene.shareOrder']", '1') 
+        .clearValue("//input[@name='bene.shareRate']") 
         .setValue("//input[@name='bene.shareRate']", '100') 
     		.click("(//input[@name='__btnSave'])[position()=4]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -298,6 +300,10 @@ module.exports = {
                   .pause(1000)
                   .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
                   .pause(1000)
+                  .click("(//input[@name='__btnSave'])[position()=6]")
+                  .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                  .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                  .pause(1000)
                   console.log('review.internalId'+i)
               }
             })
@@ -324,8 +330,6 @@ module.exports = {
                       .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
                       .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
-                      .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                     }
                   })
                 }
@@ -385,20 +389,35 @@ module.exports = {
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
-  	  	// turn to manual confirmation
-  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
-  	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
-  	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
-  	  	.click("//input[@name='search']")
-  	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
-        .pause(4000)
-  	  	.click("//tr[@classname='odd']")
-  	  	.click("//input[@name='claim']")
-  	  	.waitForElementPresent("//input[@name='btnSubmit']", 10000)
-  	  	//.clearValue("//input[@name='policyDecision']")
-    		//.setValue("//input[@name='policyDecision']", 'A')
-    		.click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
-  	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        // turn to manual confirmation
+        .url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
+        .waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
+        .setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
+        .click("//input[@name='search']")
+        .waitForElementVisible("//tr[@classname='odd']", 10000)
+        .pause(3000)
+        .click("//tr[@classname='odd']")
+        .click("//input[@name='claim']")
+        .waitForElementPresent("//input[@name='btnSubmit']", 10000)
+        .click("//input[@name='btnOutstandingIssues']")
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .elements("xpath","//select[@name='uwRuleStatusId']", function(result){
+        console.log(result.value.length)
+          for (var a=1; a < (result.value.length+1) ; a ++) {
+            !function outer(a) { 
+              browser
+              .click("(//select[@name='uwRuleStatusId'])[position()="+a+"]")
+              .keys(['\uE015','\uE015','\uE006'])
+              .pause(1000)
+            }(a)
+          }
+        })
+        browser
+        .click("//input[@name='btnSaveUwIssuesList']")
+        .click("//input[@name='btnCancel']")
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
   	  	// Pay money
   	  	.useXpath()

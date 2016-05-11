@@ -6,7 +6,7 @@ var converter = new Converter({
   checkType: false
 });
 //read from file 
-fs.createReadStream("data/all/all_smoke.csv",[{flags: 'rs+'}]).pipe(converter);
+fs.createReadStream("data/all/all.csv",[{flags: 'rs+'}]).pipe(converter);
 var moment = require('moment');
 var now = moment().format("YYYY_MMM_Do_h.mm.ss a");
 var writeStream = fs.createWriteStream("data/all/"+ now +".csv", [{flags: 'rs+'}]);
@@ -23,7 +23,7 @@ module.exports = {
         .setValue('input[name=userPassword]', 'eBao123')
         .click('input[name=Submit2]')
         .waitForElementPresent('div[classname=header_logo_ls]', 10000) 
-        .pause(1000) /*
+        .pause(1000)  
         .url('http://210.13.77.85:12000/ls/pa/outerAcceptance.do?syskey_request_token=32f6ac8c7200671c71e43cd5ef4fc2ad&current_module_id=1000003287')
         .waitForElementPresent('input[name=submissionDate_minguo]', 10000) 
         .pause(1000)
@@ -65,7 +65,7 @@ module.exports = {
   	  	.click("//input[@name='userId']")
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
-*/
+
   	  	//fill new 
         .useXpath()
   	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=DetailRegistration&taskId=6&syskey_request_token=731f379c24509368cbc25acba4e853c5')
@@ -82,10 +82,10 @@ module.exports = {
   	  	.frame('mainfr')
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000) 
+        .pause(1000)  
   	  	.setValue("//input[@name='applyVersion']", jsonArray[i]['version']) 
-  	  	.setValue("//input[@name='applyDate_minguo']", jsonArray[i]['date']) /*
-  	  	.click("//input[@name='rowid']")
+  	  	.setValue("//input[@name='applyDate_minguo']", jsonArray[i]['date']) 
+  	  	.click("//input[@name='rowid']") 
   	  	.click("//input[@name='__btnModify']")
 
   	  	// Insurance Person 
@@ -105,7 +105,7 @@ module.exports = {
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
   	  	.waitForElementPresent("(//input[@name='rowid'])[position()=2]", 30000)
-  */    .pause(1000) 
+        .pause(1000) 
   	  	.click("(//input[@name='rowid'])[position()=2]")
   	  	.click("(//input[@name='__btnModify'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -120,34 +120,34 @@ module.exports = {
           browser
           // Fill initial Type and then fill chargePeriod and chargeYear
           .isVisible("//input[@name='coverage.chargePeriod_text']", function(result){
-            console.log(result.vaule + "coverage Period \n")
-            if (result.value = true) {
+            console.log(result.vaule + "chargePeriod_text")
+            if (result.value == true) {
               browser
               .getAttribute("//input[@name='coverage.initialType_text']" ,'value', function(result){
-                  if (result.value =='00'){} else {
-                    browser
-                     .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
-                     .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
-                     console.log('coverage.chargePeriod_text' + result.value + i)
+                if (result.value =='00'){} else {
+                  browser
+                  .setValue("//input[@name='coverage.chargePeriod_text']", jsonArray[i]['chargePeriod_text'])
+                  .setValue("//input[@name='coverage.chargeYear']", jsonArray[i]['chargeYear'])
+                  console.log('coverage.chargePeriod_text' + result.value + i)
                 }
               })
-            } else{}
+            } else if (result.value =='undefined') {}
           })
 
           // Guarantee charge year
           .isVisible("//input[@name='coverage.coveragePeriod']", function(result){
             console.log(result.value + "coverage.coveragePeriod")
             if (result.value == true) {
-            browser
-            .getAttribute("//input[@name='coverage.coverageYear']", 'class' ,function(result){
-             if (result.value =='textfiled_ro textfield_null ro right readOnly'){} 
-              else {
-                browser
-                .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
-                .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
-                console.log('coveragePeriod' + result.value + i)
-              }
-            })}
+              browser
+              .getAttribute("//input[@name='coverage.coverageYear']", 'class' ,function(result){
+               if (result.value =='textfiled_ro textfield_null ro right readOnly'){} else {
+                  browser
+                  .setValue("//input[@name='coverage.coveragePeriod']", jsonArray[i]['coveragePeriod'])
+                  .setValue("//input[@name='coverage.coverageYear']", jsonArray[i]['coverageYear'])
+                  console.log('coveragePeriod' + result.value + i)
+                }
+              })
+            }
           })
 
           // Fill coverage or plan or unit
@@ -200,9 +200,9 @@ module.exports = {
             console.log(result.vaule + "coverage.unit" + i)
             if (result.value == true) {
               browser
-              .getAttribute("//input[@name='coverage.stdPremAf']", "disabled" ,function(result){
+              .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
                 console.log('coverage.stdPremAf'+result.value)
-               if (result.value =='disabled'){
+               if (result.value =='textfiled textfield_null right readOnly ro'){
                 browser
                   .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
                 } else {
@@ -263,6 +263,7 @@ module.exports = {
           .isVisible("//input[@name='coverage.payType_text']", function(result){
             console.log(result.vaule +'coverage.payYear'+i)
             if (result.value == true) {
+              browser
               .getAttribute("//input[@name='coverage.payType_text']", "class" ,function(result){
                if (result.value =='textfiled textfield_null readOnly ro'){} else {
                 browser
@@ -278,6 +279,7 @@ module.exports = {
           .isVisible("//input[@name='coverage.payEnsure']", function(result){
             console.log(result.vaule +'coverage.payYear'+i)
             if (result.value == true) {
+              browser
               .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
                if (result.value =='textfiled textfield_null right readOnly ro'){} else {
                 browser
@@ -291,6 +293,7 @@ module.exports = {
           .isVisible("//input[@name='coverage.instalmentAmount']", function(result){
             console.log(result.vaule +'coverage.instalmentAmount'+i)
             if (result.value == true) {
+              browser
               .getAttribute("//input[@name='coverage.instalmentAmount']", "class" ,function(result){
                  if (result.value =='textfiled textfield_null right readOnly ro'){} else {
                   browser
@@ -318,6 +321,7 @@ module.exports = {
           for (k=0;k<2;k++){
             !function outer(k) { 
                 if (jsonArray[i]['addcode'+k] == "") {} else { 
+                  console.log('addcode'+i+k)
                   browser
                   .setValue("//input[@name='coverage.internalId']", jsonArray[i]['addcode'+k])
                   .click("//input[@id='proposalCategory001']")
@@ -325,7 +329,9 @@ module.exports = {
                   .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                   .pause(1000)          
                     .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
+                      console.log('addcode'+result.value)
                      if (result.value == '00'){
+                      browser
                       click("//input[@name='coverage.nhiInsuIndi_text']")
                     } else {
                       console.log(k)
@@ -370,14 +376,15 @@ module.exports = {
             !function outer(k) { 
               browser
               .isVisible("//input[@name='investRate.fundCode']", function(result){
+                console.log('fundCode'+i+k+result.value)
                   if (result.value == true) {
                       if (jsonArray[i]['fundcode'+k] == "") {} else {  
                       browser
                       .setValue("//input[@name='investRate.fundCode']", jsonArray[i]['fundcode'+k])
                       .setValue("//input[@name='investRate.assignRate']", jsonArray[i]['ratio'+k])
                       .click("(//input[@name='__btnSave'])[position()=3]")
-                      .waitForElementNotPresent("//div[@classname='maskdivgen']","100000")
-                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", "30000")
+                      .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
                       }
                   }
@@ -396,6 +403,7 @@ module.exports = {
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           browser
           .getAttribute("//input[@name='payNext_text']", "class" ,function(result){
+            console.log('payNext_text'+result.value)
             if (result.value =='textfiled textfield_null right readOnly ro'){} else {
               browser
                .setValue("//input[@name='payNext_text']", '3')
@@ -414,14 +422,16 @@ module.exports = {
 
         //benificial person
         browser
-        .setValue("//input[@name='bene.nbBeneficiaryType']", '1')
+        .setValue("//input[@name='bene.nbBeneficiaryType']", jsonArray[i]['benefitperson'])
         .setValue("//input[@name='bene.designation']", '1')
         .setValue("//input[@name='bene.name']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
         .clearValue("//input[@name='bene.certiCode']") 
         var id2 = makeid()
         browser
-        .setValue("//input[@name='bene.certiCode']", id2) 
+        .setValue("//input[@name='bene.certiCode']", id2)
+        .clearValue("//input[@name='bene.shareOrder']") 
         .setValue("//input[@name='bene.shareOrder']", '1') 
+        .clearValue("//input[@name='bene.shareRate']") 
         .setValue("//input[@name='bene.shareRate']", '100') 
         .click("(//input[@name='__btnSave'])[position()=4]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
@@ -465,8 +475,10 @@ module.exports = {
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
             .isVisible("//input[@name='review.internalId']", function(result){
+              console.log('internalId'+result.value)
                 if (result.value == true) { browser
                   .getAttribute("//input[@name='review.internalId']", 'class' ,function(result){
+                    console.log('internalId'+result.value)
                     if (result.value == "textfiled textfield_null readOnly ro") {} else {
                       browser
                       .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
@@ -476,6 +488,10 @@ module.exports = {
                       .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
                       .pause(1000)
                       .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
+                      .pause(1000)
+                      .click("(//input[@name='__btnSave'])[position()=6]")
+                      .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                      .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
                       console.log('review.internalId'+i)
                     }
@@ -573,20 +589,35 @@ module.exports = {
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000) 
 
-  	  	// turn to manual confirmation
-  	  	.url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
-  	  	.waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
-  	  	.setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
-  	  	.click("//input[@name='search']")
-  	  	.waitForElementPresent("//tr[@classname='odd']", 10000)
+        // turn to manual confirmation
+        .url('http://210.13.77.85:12000/ls/pub/workflow/GetWorkList.do?procName=PA Process&taskName=ManualUW&taskId=8&syskey_request_token=752ba247eba263311fb36ec58db42536')
+        .waitForElementPresent("//input[@classname='textfield_null text1']", 10000)
+        .setValue("//input[@classname='textfield_null text1']", jsonArray[i]['number'])
+        .click("//input[@name='search']")
+        .waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-  	  	.click("//tr[@classname='odd']")
-  	  	.click("//input[@name='claim']")
-  	  	.waitForElementPresent("//input[@name='btnSubmit']", 10000)
-  	  	//.clearValue("//input[@name='policyDecision']")
-    		//.setValue("//input[@name='policyDecision']", 'A')
-    		.click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
-  	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .click("//tr[@classname='odd']")
+        .click("//input[@name='claim']")
+        .waitForElementPresent("//input[@name='btnSubmit']", 10000)
+        .click("//input[@name='btnOutstandingIssues']")
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .elements("xpath","//select[@name='uwRuleStatusId']", function(result){
+        console.log(result.value.length)
+          for (var a=1; a < (result.value.length+1) ; a ++) {
+            !function outer(a) { 
+              browser
+              .click("(//select[@name='uwRuleStatusId'])[position()="+a+"]")
+              .keys(['\uE015','\uE015','\uE006'])
+              .pause(1000)
+            }(a)
+          }
+        })
+        browser
+        .click("//input[@name='btnSaveUwIssuesList']")
+        .click("//input[@name='btnCancel']")
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
   	  	// Pay money
   	  	.useXpath()
