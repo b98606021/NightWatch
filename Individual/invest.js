@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1 ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 3 ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.85:12000/ls/logoutPage.do')
@@ -429,8 +429,11 @@ module.exports = {
         })
         browser
         .click("//input[@name='btnSaveUwIssuesList']")
+        .pause(1000)
         .click("//input[@name='btnCancel']")
+        .pause(1000)
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        .pause(1000)
     		.click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
