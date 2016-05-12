@@ -60,7 +60,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
         .waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -74,7 +74,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(1000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='claim']")
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
   	  	.waitForElementPresent("//iframe[@name='MasterPolicy']", 30000)
@@ -202,7 +202,8 @@ module.exports = {
                   .pause(1000)          
                     .getAttribute("//input[@name='coverage.initialType_text']", "value" ,function(result){
                      if (result.value == '00'){
-                      click("//input[@name='coverage.nhiInsuIndi_text']")
+                      browser
+                      .click("//input[@name='coverage.nhiInsuIndi_text']")
                     } else {
                       console.log(k)
                       browser
@@ -350,7 +351,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -382,7 +383,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(4000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -396,7 +397,7 @@ module.exports = {
         .click("//input[@name='search']")
         .waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-        .click("//tr[@classname='odd']")
+        .click("//tr[@classname='odd']/td[@classname='table_column odd']")
         .click("//input[@name='claim']")
         .waitForElementPresent("//input[@name='btnSubmit']", 10000)
         .click("//input[@name='btnOutstandingIssues']")

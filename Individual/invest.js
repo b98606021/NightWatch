@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 3 ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1 ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.85:12000/ls/logoutPage.do')
@@ -60,7 +60,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(2000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -75,7 +75,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(2000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='claim']")
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
   	  	.waitForElementPresent("//iframe[@name='MasterPolicy']", 30000)
@@ -187,7 +187,16 @@ module.exports = {
         browser
         .setValue("//input[@name='bene.branchCode']", '0040059')
         .setValue("//input[@name='bene.bankAccount']", '16888888888888')
-        .click("//select[@name='coverage.versionTypeId']/option[@value='"+ jsonArray[i]['type'] +"']") // A=367, B=368
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
+          .isVisible("//select[@name='coverage.versionTypeId']/option[@value='367']", function(result){
+            if (result.value == true) { browser
+              .click("//select[@name='coverage.versionTypeId']/option[@value='"+ jsonArray[i]['type'] +"']") // A=367, B=368
+            }
+          })
+        },false)}(i)
+        browser
+        .pause(1000)
   	  	.click("(//input[@name='__btnSave'])[position()=2]")
         .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
   	  	.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
@@ -364,7 +373,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -378,7 +387,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='claim']")
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
   	  	.waitForElementPresent("//iframe[@name='MasterPolicy']", 30000)
@@ -397,7 +406,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='btnReassign']")
   	  	.waitForElementPresent("//input[@name='userId']", 10000)
   	  	.click("//input[@name='userId']")
@@ -411,7 +420,7 @@ module.exports = {
   	  	.click("//input[@name='search']")
   	  	.waitForElementVisible("//tr[@classname='odd']", 10000)
         .pause(3000)
-  	  	.click("//tr[@classname='odd']")
+  	  	.click("//tr[@classname='odd']/td[@classname='table_column odd']")
   	  	.click("//input[@name='claim']")
   	  	.waitForElementPresent("//input[@name='btnSubmit']", 10000)
         .click("//input[@name='btnOutstandingIssues']")
