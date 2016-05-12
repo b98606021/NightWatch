@@ -419,7 +419,7 @@ module.exports = {
         .click("//input[@name='btnCancel']")
         .pause(1000)
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
-        .pause(1000)
+        .pause(5000)
         .click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
