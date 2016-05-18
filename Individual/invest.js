@@ -13,7 +13,7 @@ var writeStream = fs.createWriteStream("data/invest/"+ now +".csv", [{flags: 'rs
 writeStream.write('ID'+','+'Number'+','+'Product'+','+'Payamount'+','+'Result'); 
 
 module.exports = {
-  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < 1 ; i ++)  { 
+  'Open Invest' : function (browser) { converter.on("end_parsed", function (jsonArray) { for (i = 0; i < jsonArray.length ; i ++)  { 
       browser
         .useCss()
         .url('http://210.13.77.85:12000/ls/logoutPage.do')
@@ -125,15 +125,20 @@ module.exports = {
             }
           })
 
-          .isVisible("//input[@name='coverage.amount']", function(result){
-            if (result.value == true) {
+          .getAttribute("//input[@name='coverage.amount']", "class" ,function(result){
+            if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
               browser
-              .setValue("//input[@name='coverage.amount']", jsonArray[i]['getamount'])
-              .setValue("//input[@name='coverage.applyAmount']", jsonArray[i]['flexible'])
-              .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
-            } else {}
+              .setValue("//input[@name='coverage.amount']",jsonArray[i]['getamount'])
+            }
           })
 
+          .getAttribute("//input[@name='coverage.applyAmount']", "class" ,function(result){
+            if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+              browser
+              .setValue("//input[@name='coverage.applyAmount']",jsonArray[i]['flexible'])
+            }
+          })
+          .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
           .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
              console.log('payamount'+i)
              if (result.value =='textfiled textfield_null right readOnly ro'){
@@ -160,6 +165,7 @@ module.exports = {
             console.log('paytype'+i)
            if (result.value =='textfiled textfield_null readOnly ro'){} else {
             browser
+              .clearValue("//input[@name='coverage.payType_text']")
               .setValue("//input[@name='coverage.payType_text']", jsonArray[i]['paytype'])
               console.log('paytype'+i)
             }
