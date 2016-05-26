@@ -489,7 +489,7 @@ module.exports = {
                       .pause(1000)
                       .setValue("//input[@name='review.strVersion']", jsonArray[i]['version'])
                       .pause(1000)
-                      .click("(//input[@name='__btnSave'])[position()=6]")
+                      .click("(//input[@name='__btnSave'])[position()=7]")
                       .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
                       .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
@@ -518,7 +518,7 @@ module.exports = {
                       .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
                       .clearValue("//input[@name='review.strVersion']")
                       .setValue("//input[@name='review.strVersion']", '1')
-                      .click("(//input[@name='__btnSave'])[position()=6]")
+                      .click("(//input[@name='__btnSave'])[position()=7]")
                       .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
                       .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
@@ -532,11 +532,6 @@ module.exports = {
         },false)}(i)
 
         browser
-        .click("(//input[@name='__btnSave'])[position()=6]")
-        .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-        .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-        .pause(1000)
-        // final click
     		.click("//input[@name='btnSubmit']", function(){browser.accept_alert()})
     		.waitForElementPresent("//div[@classname='header_logo_ls']", 30000)
 
@@ -618,7 +613,7 @@ module.exports = {
         .click("//input[@name='btnCancel']")
         .pause(1000)
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
-        .pause(1000)
+        .pause(5000)
         .click("//input[@name='btnSubmit']" , function(){browser.accept_alert()})
         .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 

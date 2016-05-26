@@ -132,27 +132,27 @@ module.exports = {
             }
           })
 
+          .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
+             console.log('payamount'+result.value)
+             if (result.value =='textfiled textfield_null right readOnly ro'){
+              browser
+                .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
+              } else {
+              browser
+                .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
+              }
+          })
+
           .getAttribute("//input[@name='coverage.applyAmount']", "class" ,function(result){
             if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
               browser
               .setValue("//input[@name='coverage.applyAmount']",jsonArray[i]['flexible'])
             }
           })
+
+          
+
           .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
-          .getAttribute("//input[@name='coverage.stdPremAf']", "class" ,function(result){
-             console.log('payamount'+i)
-             if (result.value =='textfiled textfield_null right readOnly ro'){
-              browser
-                .setValue("(//input[@name='coverage.stdPremAf'])[position()=2]", jsonArray[i]['payamount'])
-                console.log('payamount'+i)
-              } else {
-              browser
-                .setValue("//input[@name='coverage.stdPremAf']", jsonArray[i]['payamount'])
-                console.log('payamount'+i)
-              }
-          })
-
-
           .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
@@ -175,7 +175,7 @@ module.exports = {
           .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
-             .setValue("//input[@name='coverage.payEnsure']", '10')
+             .setValue("//input[@name='coverage.payEnsure']", '20')
             }
           })
 
@@ -335,7 +335,32 @@ module.exports = {
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
 
+
         // trad claim 
+        !function outer(i) { browser
+          .elementIdDisplayed("//input[@name='review.internalId']", function(){ browser
+            .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
+                if (result.value == "textfiled textfield_null readOnly ro") {} else {
+                browser
+                  .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+                  .pause(1000)
+                  .setValue("//input[@name='review.reviewIndi_text']", '1')
+                  .pause(1000)
+                  .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+                  .pause(1000)
+                  .setValue("//input[@name='review.strVersion']", '1')
+                  .pause(1000)
+                  .click("(//input[@name='__btnSave'])[position()=7]")
+                  .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                  .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                  .pause(1000)
+                  console.log('review.internalId'+i)
+              }
+            })
+        },false)}(i)   
+
+
+        // trad claim additional
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){
           for (k=0;k<2;k++){
@@ -352,7 +377,7 @@ module.exports = {
                       .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
                       .clearValue("//input[@name='review.strVersion']")
                       .setValue("//input[@name='review.strVersion']", '1')
-                      .click("(//input[@name='__btnSave'])[position()=6]")
+                      .click("(//input[@name='__btnSave'])[position()=7]")
                       .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
                       .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
                       .pause(1000)
