@@ -194,9 +194,9 @@ module.exports = {
         .setValue("//input[@name='bene.branchCode']", '0040059')
         .setValue("//input[@name='bene.bankAccount']", '16888888888888')
         !function outer(i) { browser
-        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
+        .elementIdDisplayed("//select[@name='coverage.versionTypeId']", function(){ browser
           .isVisible("//select[@name='coverage.versionTypeId']/option[@value='367']", function(result){
-            if (result.value == true) { browser
+            if (result.value == true && jsonArray[i]['code'] == 'VNL') { browser
               .click("//select[@name='coverage.versionTypeId']/option[@value='"+ jsonArray[i]['type'] +"']") // A=367, B=368
             }
           })
@@ -286,7 +286,7 @@ module.exports = {
     		.setValue("//input[@name='aplPermit_text']", '2')
 
     		//benificial person
-    		.setValue("//input[@name='bene.nbBeneficiaryType']", '5') // change 5
+    		.setValue("//input[@name='bene.nbBeneficiaryType']", '4') // change 5
     		.setValue("//input[@name='bene.designation']", '1')
         .setValue("//input[@name='bene.name']", 'mother'+Math.floor((Math.random() * 1000000) + 1))
         .clearValue("//input[@name='bene.certiCode']") 
@@ -340,7 +340,7 @@ module.exports = {
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='review.internalId']", function(){ browser
             .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
-                if (result.value == "textfiled textfield_null readOnly ro") {} else {
+                if (result.value == "textfiled textfield_null readOnly ro" && jsonArray[i]['code'] != "QIA" || "DAW") {} else {
                 browser
                   .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
                   .pause(1000)
