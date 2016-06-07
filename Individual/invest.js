@@ -150,6 +150,14 @@ module.exports = {
             }
           })
 
+          .getAttribute("//input[@name='coverage.insurabilityIndicator_text']", "class" ,function(result){
+            if (result.value == 'textfiled textfield_null readOnly ro'){} else {
+              browser
+              .clearValue("//input[@name='coverage.insurabilityIndicator_text']")
+              .setValue("//input[@name='coverage.insurabilityIndicator_text']",'1')
+            }
+          })
+
           
 
           .setValue("//input[@name='coverage.agreeReadIndi_text']", '1')
@@ -335,26 +343,34 @@ module.exports = {
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
 
+        //fatca
+        .setValue("//input[@name='fatcaNationality_text']", '香港')
+        .setValue("//input[@name='fatcaBirthPlace']", '02')
+        .setValue("//input[@name='fatcaIdentityStatement_text']", 'A')
+        .setValue("//input[@name='fatcaVersion']", '1')
+
 
         // trad claim 
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='review.internalId']", function(){ browser
             .getAttribute("//input[@name='review.internalId']", "class" ,function(result){
-                if (result.value == "textfiled textfield_null readOnly ro" && jsonArray[i]['code'] != "QIA" || "DAW") {} else {
-                browser
-                  .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
-                  .pause(1000)
-                  .setValue("//input[@name='review.reviewIndi_text']", '1')
-                  .pause(1000)
-                  .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
-                  .pause(1000)
-                  .setValue("//input[@name='review.strVersion']", '1')
-                  .pause(1000)
-                  .click("(//input[@name='__btnSave'])[position()=7]")
-                  .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
-                  .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
-                  .pause(1000)
-                  console.log('review.internalId'+i)
+                if (result.value == "textfiled textfield_null readOnly ro") {} else {
+                  if (jsonArray[i]['code'] =="QIA" || "DAW") {
+                  browser
+                    .setValue("//input[@name='review.internalId']", jsonArray[i]['code'])
+                    .pause(1000)
+                    .setValue("//input[@name='review.reviewIndi_text']", '1')
+                    .pause(1000)
+                    .setValue("//input[@name='review.reviewDate_minguo']", jsonArray[i]['date'])
+                    .pause(1000)
+                    .setValue("//input[@name='review.strVersion']", '1')
+                    .pause(1000)
+                    .click("(//input[@name='__btnSave'])[position()=7]")
+                    .waitForElementNotPresent("//div[@classname='maskdivgen']",100000)
+                    .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
+                    .pause(1000)
+                    console.log('review.internalId'+i)
+                }
               }
             })
         },false)}(i)   

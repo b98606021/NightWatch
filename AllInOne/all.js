@@ -471,6 +471,12 @@ module.exports = {
         .waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
         .pause(1000)
 
+        //fatca
+        .setValue("//input[@name='fatcaNationality_text']", '香港')
+        .setValue("//input[@name='fatcaBirthPlace']", '02')
+        .setValue("//input[@name='fatcaIdentityStatement_text']", 'A')
+        .setValue("//input[@name='fatcaVersion']", '1')
+
         // trad claim
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser

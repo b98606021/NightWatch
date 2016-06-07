@@ -174,6 +174,7 @@ module.exports = {
              if (result.value =='textfiled textfield_null right readOnly ro'){} 
               else {
               browser
+                .clearValue("//input[@name='coverage.unit']")
                 .setValue("//input[@name='coverage.unit']", jsonArray[i]['unit'])
                 console.log('coverage.unit'+i)
               }
@@ -287,6 +288,12 @@ module.exports = {
     		.waitForElementPresent("(//input[@name='__btnSave'])[position()=3]", 30000)
     		.pause(1000)
 
+        //fatca
+        .setValue("//input[@name='fatcaNationality_text']", '香港')
+        .setValue("//input[@name='fatcaBirthPlace']", '02')
+        .setValue("//input[@name='fatcaIdentityStatement_text']", 'A')
+        .setValue("//input[@name='fatcaVersion']", '1')
+
         // trad claim 
         !function outer(i) { browser
           .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ browser
@@ -337,6 +344,7 @@ module.exports = {
             }(k)
           }
         },false)}(i)
+
         
         // final click
         browser
