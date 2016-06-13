@@ -90,7 +90,9 @@ module.exports = {
   	  	.click("//input[@name='__btnModify']")
 
   	  	// Insurance Person 
-        .setValue("//input[@name='policyHolderName']", 'Kobe'+Math.floor((Math.random() * 1000000) + 1))
+        var name1 = ('Kobe'+Math.floor((Math.random() * 1000000) + 1));
+        browser
+        .setValue("//input[@name='policyHolderName']", name1)
         .setValue("//input[@name='policyHolderBirthDay_minguo']", jsonArray[i]['birthDay'])
         .setValue("//input[@name='policyHolderGender_text']", jsonArray[i]['gender']) //1 = male, 2= female
         .setValue("//input[@name='policyHolderJobCateId_text']", 'A101')
@@ -500,22 +502,74 @@ module.exports = {
   	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
   	  	.click("//input[@classname='button btn']")
   	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
-        .getAttribute("//input[@name='totalIP']", "value" ,function(result){
-        browser
-          .setValue("//input[@name='pay_amount']",result.value)
-          .setValue("//input[@name='voucherAmount']",result.value)
-        if(result.value == '0') {writeStream.write('0'+',')}  else {
-          var money = result.value
-          money = money.replace(/,/g,"")
-          writeStream.write(money+',')
-        }
-        })
-  	  	.setValue("//input[@name='payMode_text']", '11')
-  	  	.click("//input[@name='voucherDate_minguo']")
-  	  	.pause(2000)
-  	  	.setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])
-  	  	.click("//select[@name='account']")
-  	  	.keys(['\uE015', '\uE006'])
+        !function outer(i) { browser
+        .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ 
+          if (jsonArray[i]['pay'] == 2){ browser
+            .setValue("//input[@name='payMode_text']", jsonArray[i]['pay'])
+            .click("//input[@name='voucherDate_minguo']")
+            .pause(2000)
+            .setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])
+            .click("//select[@name='account']")
+            .keys(['\uE015', '\uE006'])
+            .setValue("//input[@name='creditCardNo_part0']", '5410')
+            .setValue("//input[@name='creditCardNo_part1']", '0001')
+            .setValue("//input[@name='creditCardNo_part2']", '1349')
+            .setValue("//input[@name='creditCardNo_part3']", '4290')
+            .setValue("//input[@name='creditCardNote']", '3688')
+            .setValue("//input[@name='creditValidYyyymm_Yyyy']", '2024')
+            .setValue("//input[@name='creditValidYyyymm_Mm']", '10')
+
+          } else if (jsonArray[i]['pay'] == 6){ browser
+            .setValue("//input[@name='payMode_text']", jsonArray[i]['pay'])
+            .click("//input[@name='voucherDate_minguo']")
+            .pause(2000)
+            .setValue("//input[@name='chequeNumber']", '2100004')
+            .setValue("//input[@name='chequePayUnit']", '010050061')
+            .setValue("//input[@name='chequeAccount']", '232168223001')
+            .setValue("//input[@name='chequeDueDate_1_minguo']", jsonArray[i]['date'])
+            .setValue("//input[@name='chequeHolder']", '4290')
+            .click("//select[@name='chequeRelationId']")
+            .keys(['\uE015', '\uE006'])
+
+          } else if (jsonArray[i]['pay'] == 3){ browser 
+            .setValue("//input[@name='payMode_text']", jsonArray[i]['pay'])
+            .click("//input[@name='voucherDate_minguo']")
+            .pause(2000)
+            .setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])
+            .click("//select[@name='account']")
+            .keys(['\uE015', '\uE006'])
+            .click("//input[@name='sameToProposerCheck']")
+
+
+          } else { browser 
+            .setValue("//input[@name='payMode_text']", jsonArray[i]['pay'])
+            .click("//input[@name='voucherDate_minguo']")
+            .pause(2000)
+            .setValue("//input[@name='voucherDate_minguo']", jsonArray[i]['date'])
+            .click("//select[@name='account']")
+            .keys(['\uE015', '\uE006'])
+          }
+
+          browser 
+          .getAttribute("//input[@name='totalIP']", "value" ,function(result){
+            if(result.value == '0') {writeStream.write('0'+',')}  else {
+              var money = result.value
+              money = money.replace(/,/g,"")
+              writeStream.write(money+',')
+            }
+            if (jsonArray[i]['pay'] == 6){
+            browser
+            .setValue("//input[@name='pay_amount']",result.value)
+            .setValue("//input[@name='chequeAmount']",result.value)
+            } else {
+              browser
+              .setValue("//input[@name='pay_amount']",result.value)
+              .setValue("//input[@name='voucherAmount']",result.value)
+            }
+          })
+        },false)}(i)
+
+        browser	
   	  	.click("(//input[@classname='button btn'])[position()=1]")
   	  	.waitForElementPresent("//table[@id='table2']", 30000)
   	  	.click("(//input[@classname='button btn'])[position()=3]")
