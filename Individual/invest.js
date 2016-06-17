@@ -166,7 +166,7 @@ module.exports = {
           .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
-              .setValue("//input[@name='coverage.payYear']", '70')
+              .setValue("//input[@name='coverage.payYear']", '65')
             }
           })
 
@@ -496,12 +496,12 @@ module.exports = {
   	  	.waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
 
   	  	// Pay money
-  	  	.useXpath()
-  	  	.url('http://210.13.77.85:12000/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
-  	  	.waitForElementPresent("//input[@classname='button btn']", 30000) 
-  	  	.setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
-  	  	.click("//input[@classname='button btn']")
-  	  	.waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
+        .useXpath()
+        .url('http://210.13.77.85:12000/ls/arap/cash/recv/counter/search.do?syskey_request_token=752ba247eba263311fb36ec58db42536&current_module_id=300168')
+        .waitForElementPresent("//input[@classname='button btn']", 30000) 
+        .setValue("//input[@name='policyNumber']", jsonArray[i]['number'])
+        .click("//input[@classname='button btn']")
+        .waitForElementPresent("(//input[@classname='button btn'])[position()=1]", 30000) 
         !function outer(i) { browser
         .elementIdDisplayed("//input[@name='coverage.stdPremAf']", function(){ 
           if (jsonArray[i]['pay'] == 2){ browser
@@ -569,12 +569,12 @@ module.exports = {
           })
         },false)}(i)
 
-        browser	
-  	  	.click("(//input[@classname='button btn'])[position()=1]")
-  	  	.waitForElementPresent("//table[@id='table2']", 30000)
-  	  	.click("(//input[@classname='button btn'])[position()=3]")
-  	  	.click("(//input[@classname='button btn'])[position()=4]")
-		    .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
+        browser 
+        .click("(//input[@classname='button btn'])[position()=1]")
+        .waitForElementPresent("//table[@id='table2']", 30000)
+        .click("(//input[@classname='button btn'])[position()=3]")
+        .click("(//input[@classname='button btn'])[position()=4]")
+        .waitForElementPresent("//div[@classname='header_logo_ls']", 30000) 
         .saveScreenshot('./data/invest/' +jsonArray[i]['number']+'payamount.png')
 
         // Check
