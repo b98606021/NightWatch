@@ -145,6 +145,13 @@ module.exports = {
               }
           })
 
+          .getAttribute("//input[@name='coverage.customizedPrem']", "class" ,function(result){
+            if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
+              browser
+              .setValue("//input[@name='coverage.customizedPrem']",jsonArray[i]['customized'])
+            }
+          })
+
           .getAttribute("//input[@name='coverage.applyAmount']", "class" ,function(result){
             if (result.value == 'textfiled textfield_null right readOnly ro'){} else {
               browser
@@ -166,7 +173,7 @@ module.exports = {
           .getAttribute("//input[@name='coverage.payYear']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
-              .setValue("//input[@name='coverage.payYear']", '65')
+              .setValue("//input[@name='coverage.payYear']", '20')
             }
           })
 
@@ -185,7 +192,7 @@ module.exports = {
           .getAttribute("//input[@name='coverage.payEnsure']", "class" ,function(result){
            if (result.value =='textfiled textfield_null right readOnly ro'){} else {
             browser
-             .setValue("//input[@name='coverage.payEnsure']", '20')
+             .setValue("//input[@name='coverage.payEnsure']", '10')
             }
           })
 
@@ -204,12 +211,15 @@ module.exports = {
         .setValue("//input[@name='bene.branchCode']", '0040059')
         .setValue("//input[@name='bene.bankAccount']", '16888888888888')
         !function outer(i) { browser
-        .elementIdDisplayed("//select[@name='coverage.versionTypeId']", function(){ browser
-          .isVisible("//select[@name='coverage.versionTypeId']/option[@value='367']", function(result){
-            if (result.value == true && jsonArray[i]['code'] == 'VNL') { browser
-              .click("//select[@name='coverage.versionTypeId']/option[@value='"+ jsonArray[i]['type'] +"']") // A=367, B=368
-            }
-          })
+        .elementIdDisplayed("//select[@name='coverage.versionTypeId']", function(){ 
+          if(jsonArray[i]['code'] == 'VNL') { 
+            browser
+            .isVisible("//select[@name='coverage.versionTypeId']/option[@value='367']", function(result){
+              if (result.value == true) { browser
+                .click("//select[@name='coverage.versionTypeId']/option[@value='"+ jsonArray[i]['type'] +"']") // A=367, B=368
+              }
+            })
+          }
         },false)}(i)
         browser
         .pause(1000)

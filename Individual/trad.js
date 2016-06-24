@@ -292,7 +292,7 @@ module.exports = {
 
         //fatca
         .setValue("//input[@name='fatcaNationality_text']", '香港')
-        .setValue("//input[@name='fatcaBirthPlace']", '02')
+        .setValue("//input[@name='fatcaBirthPlace']", '2')
         .setValue("//input[@name='fatcaIdentityStatement_text']", 'A')
         .setValue("//input[@name='fatcaVersion']", '1')
 
